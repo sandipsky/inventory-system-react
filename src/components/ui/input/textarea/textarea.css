@@ -1,0 +1,13 @@
+/* Scoped to `.form-control` — the Angular source styled bare `textarea` under
+   view encapsulation; globally that would leak to every textarea. */
+textarea.form-control {
+  font-family: inherit;
+  font-weight: 400;
+  width: 100%;
+  resize: none;
+  min-height: 72px;
+
+  &.resizable {
+    resize: vertical;
+  }
+}

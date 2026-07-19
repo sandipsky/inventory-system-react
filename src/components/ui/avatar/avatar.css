@@ -1,0 +1,24 @@
+/* The Angular :host was an inline-flex wrapper around the img/span; here the
+   img/span is the root element itself, so the host styles are merged into
+   `.avatar` (vertical-align keeps it sitting nicely in text flow). */
+.avatar {
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.avatar-image {
+  object-fit: cover;
+}
+
+.avatar-initials {
+  font-size: 0.875em;
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+  user-select: none;
+}

@@ -1,0 +1,53 @@
+/**
+ * Barrel for the LumenUI component library.
+ * Import anything as `import { LUIButton, LUIModalProvider, ... } from '<path>/components'`.
+ *
+ * Folders with their own index.ts (drawer, filter, layout, loading-spinner, modal, table)
+ * are re-exported through it so internal pieces (containers, date libs) stay private.
+ */
+
+/* All-in-one provider (notification + spinner + modal + drawer) */
+export * from './provider/provider';
+
+/* Layout (app shell) */
+export * from './layout/header/header';
+export * from './layout/sidebar/sidebar';
+
+/* UI */
+export * from './ui/accordion/accordion';
+export * from './ui/accordion/accordion-item';
+export * from './ui/avatar/avatar';
+export * from './ui/badge/badge';
+export * from './ui/breadcrumb/breadcrumb';
+export * from './ui/button/button';
+export * from './ui/drawer';
+export * from './ui/file-upload/file-upload';
+export * from './ui/filter';
+export * from './ui/layout';
+export * from './ui/loading-spinner';
+export * from './ui/menu/menu';
+export * from './ui/modal';
+export * from './ui/notification/notification';
+export * from './ui/pagination/pagination';
+export * from './ui/segmented-control/segmented-control';
+export * from './ui/skeleton/skeleton';
+export * from './ui/stepper/stepper';
+export * from './ui/table';
+export * from './ui/tabs/tab';
+export * from './ui/tabs/tabs';
+export * from './ui/tooltip/tooltip';
+export * from './ui/tree/tree';
+export * from './ui/tree/tree-item';
+
+/* Inputs */
+export * from './ui/input/checkbox/checkbox';
+export * from './ui/input/date-input/date-input';
+export * from './ui/input/email-input/email-input';
+export * from './ui/input/number-input/number-input';
+export * from './ui/input/otp-input/otp-input';
+export * from './ui/input/password-input/password-input';
+export * from './ui/input/radio/radio';
+export * from './ui/input/select/select';
+export * from './ui/input/text-input/text-input';
+export * from './ui/input/textarea/textarea';
+export * from './ui/input/toggle/toggle';
