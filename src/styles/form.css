@@ -1,0 +1,162 @@
+/* Common form styles shared across LumenUI inputs. Type-specific styles live in
+   each component's own `.css` (e.g. toggle.css, checkbox.css, number-input.css). */
+
+/* LumenUI field components (LUITextInput, LUIPasswordInput, …) — block-level,
+   full width. The component root element carries `.lui-field`. */
+.lui-field {
+  display: block;
+  width: 100%;
+}
+
+/* Selection controls (LUIToggle, LUICheckbox, LUIRadio) are intrinsically
+   sized, not full-width. The component root element carries `.lui-control-host`. */
+.lui-control-host {
+  display: block;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  gap: 6px;
+}
+
+.form-group label {
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.form-group label span {
+  color: var(--error);
+}
+
+.form-control {
+  padding: 6px 8px;
+  border: 1px solid var(--separator);
+  background: var(--bg-lightest);
+  border-radius: 8px;
+  outline: none;
+  display: flex;
+  align-self: stretch;
+  align-items: flex-start;
+  gap: 12px;
+  box-shadow: 0 1px 2px 0 rgba(13, 13, 18, 0.06);
+
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.form-control::placeholder {
+  color: var(--text-quaternary);
+}
+
+.form-control:focus {
+  outline: none;
+  border: 1px solid var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.form-control.error {
+  background: var(--error-bg);
+  border: 1px solid var(--error);
+}
+
+/* Shared icon wrapper used by the password and email inputs. */
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-wrapper .form-control {
+  width: 100%;
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+.input-wrapper .left-icon,
+.input-wrapper .right-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  opacity: 0.7;
+}
+
+.input-wrapper .left-icon {
+  left: 8px;
+}
+
+.input-wrapper .right-icon {
+  right: 8px;
+}
+
+.input-wrapper .right-icon.clickable {
+  cursor: pointer;
+}
+
+/* Inline validation message shown under a field. */
+.alert {
+  display: flex;
+  padding: 4px 8px;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.alert.success {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.alert.error {
+  background: var(--error-bg);
+  color: var(--error);
+}
+
+.alert.warn {
+  background: var(--warn-bg);
+  color: var(--warn);
+}
+
+.alert.info {
+  background: var(--info-bg);
+  color: var(--info);
+}
+
+/* ================= Selection controls (toggle / checkbox / radio) =================
+   Layout primitives shared by all three; each control's visuals live in its own css. */
+
+.control-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.control-row.label-left {
+  flex-direction: row-reverse;
+}
+
+.control-row:has(input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* More specific than `.form-group label span` (the required-asterisk rule) so the
+   control text stays primary, not error-red. */
+.control-row .control-label {
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}

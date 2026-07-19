@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from '@tanstack/react-router';
 import './breadcrumb.css';
 
 export interface BreadcrumbItem {
@@ -17,8 +17,8 @@ export interface LUIBreadcrumbProps {
 
 /**
  * Presentational breadcrumb trail. Pass the crumbs as `items` — the last one is
- * rendered as the current page; earlier ones link via react-router `Link` when
- * they carry a `link`.
+ * rendered as the current page; earlier ones link via TanStack Router's `Link`
+ * when they carry a `link`.
  *
  * ```tsx
  * <LUIBreadcrumb

@@ -1,0 +1,42 @@
+.l-main-layout {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.l-main-layout__main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.l-main-layout__content {
+  flex: 1;
+  padding: 24px;
+  overflow: auto;
+  font-size: 14px;
+  color: var(--text-secondary);
+  background: var(--bg-light);
+}
+
+.l-main-layout__brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  margin: 12px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--text-white);
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.l-main-layout__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 12px;
+}

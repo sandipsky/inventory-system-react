@@ -11,6 +11,7 @@ export * from './provider/provider';
 
 /* Layout (app shell) */
 export * from './layout/header/header';
+export * from './layout/main-layout/main-layout';
 export * from './layout/sidebar/sidebar';
 
 /* UI */

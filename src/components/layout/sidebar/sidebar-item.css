@@ -1,0 +1,52 @@
+.l-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.l-sidebar-item:hover {
+  background: var(--bg-dark);
+  color: var(--text-primary);
+}
+
+.l-sidebar-item--active {
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.l-sidebar-item__icon {
+  display: inline-flex;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 18px;
+}
+
+.l-sidebar-item__label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Collapsed rail is a desktop-only state; on mobile the drawer is full width.
+   Keep in sync with MOBILE_BREAKPOINT in sidebar.tsx. */
+@media (min-width: 769px) {
+  .l-sidebar--collapsed .l-sidebar-item {
+    justify-content: center;
+    padding: 8px 0;
+  }
+
+  .l-sidebar--collapsed .l-sidebar-item__label {
+    display: none;
+  }
+}
