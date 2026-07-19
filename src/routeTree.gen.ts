@@ -12,6 +12,29 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
+import { Route as AuthenticatedRolesPermissionsRouteImport } from './routes/_authenticated/roles-permissions'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedUserRouteImport } from './routes/_authenticated/user'
+import { Route as AuthenticatedAccountingAccountMasterRouteImport } from './routes/_authenticated/accounting/account-master'
+import { Route as AuthenticatedAccountingJournalEntryRouteImport } from './routes/_authenticated/accounting/journal-entry'
+import { Route as AuthenticatedAccountingOpeningBalanceRouteImport } from './routes/_authenticated/accounting/opening-balance'
+import { Route as AuthenticatedAccountingPaymentRouteImport } from './routes/_authenticated/accounting/payment'
+import { Route as AuthenticatedAccountingPaymentAdjustmentRouteImport } from './routes/_authenticated/accounting/payment-adjustment'
+import { Route as AuthenticatedInventoryOpeningStockRouteImport } from './routes/_authenticated/inventory/opening-stock'
+import { Route as AuthenticatedInventoryStockAdjustmentRouteImport } from './routes/_authenticated/inventory/stock-adjustment'
+import { Route as AuthenticatedInventoryStockEditRouteImport } from './routes/_authenticated/inventory/stock-edit'
+import { Route as AuthenticatedPurchasePurchaseEntryRouteImport } from './routes/_authenticated/purchase/purchase-entry'
+import { Route as AuthenticatedPurchasePurchaseReturnRouteImport } from './routes/_authenticated/purchase/purchase-return'
+import { Route as AuthenticatedPurchaseVendorRouteImport } from './routes/_authenticated/purchase/vendor'
+import { Route as AuthenticatedSalesCustomerRouteImport } from './routes/_authenticated/sales/customer'
+import { Route as AuthenticatedSalesSalesEntryRouteImport } from './routes/_authenticated/sales/sales-entry'
+import { Route as AuthenticatedSalesSalesReturnRouteImport } from './routes/_authenticated/sales/sales-return'
+import { Route as AuthenticatedSetupCategoryRouteImport } from './routes/_authenticated/setup/category'
+import { Route as AuthenticatedSetupPackingRouteImport } from './routes/_authenticated/setup/packing'
+import { Route as AuthenticatedSetupProductsRouteImport } from './routes/_authenticated/setup/products'
+import { Route as AuthenticatedSetupTaxTypeRouteImport } from './routes/_authenticated/setup/tax-type'
+import { Route as AuthenticatedSetupUnitRouteImport } from './routes/_authenticated/setup/unit'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
@@ -27,27 +50,307 @@ const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedRolesPermissionsRoute =
+  AuthenticatedRolesPermissionsRouteImport.update({
+    id: '/roles-permissions',
+    path: '/roles-permissions',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedUserRoute = AuthenticatedUserRouteImport.update({
+  id: '/user',
+  path: '/user',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedAccountingAccountMasterRoute =
+  AuthenticatedAccountingAccountMasterRouteImport.update({
+    id: '/accounting/account-master',
+    path: '/accounting/account-master',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAccountingJournalEntryRoute =
+  AuthenticatedAccountingJournalEntryRouteImport.update({
+    id: '/accounting/journal-entry',
+    path: '/accounting/journal-entry',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAccountingOpeningBalanceRoute =
+  AuthenticatedAccountingOpeningBalanceRouteImport.update({
+    id: '/accounting/opening-balance',
+    path: '/accounting/opening-balance',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAccountingPaymentRoute =
+  AuthenticatedAccountingPaymentRouteImport.update({
+    id: '/accounting/payment',
+    path: '/accounting/payment',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAccountingPaymentAdjustmentRoute =
+  AuthenticatedAccountingPaymentAdjustmentRouteImport.update({
+    id: '/accounting/payment-adjustment',
+    path: '/accounting/payment-adjustment',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedInventoryOpeningStockRoute =
+  AuthenticatedInventoryOpeningStockRouteImport.update({
+    id: '/inventory/opening-stock',
+    path: '/inventory/opening-stock',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedInventoryStockAdjustmentRoute =
+  AuthenticatedInventoryStockAdjustmentRouteImport.update({
+    id: '/inventory/stock-adjustment',
+    path: '/inventory/stock-adjustment',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedInventoryStockEditRoute =
+  AuthenticatedInventoryStockEditRouteImport.update({
+    id: '/inventory/stock-edit',
+    path: '/inventory/stock-edit',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPurchasePurchaseEntryRoute =
+  AuthenticatedPurchasePurchaseEntryRouteImport.update({
+    id: '/purchase/purchase-entry',
+    path: '/purchase/purchase-entry',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPurchasePurchaseReturnRoute =
+  AuthenticatedPurchasePurchaseReturnRouteImport.update({
+    id: '/purchase/purchase-return',
+    path: '/purchase/purchase-return',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPurchaseVendorRoute =
+  AuthenticatedPurchaseVendorRouteImport.update({
+    id: '/purchase/vendor',
+    path: '/purchase/vendor',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSalesCustomerRoute =
+  AuthenticatedSalesCustomerRouteImport.update({
+    id: '/sales/customer',
+    path: '/sales/customer',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSalesSalesEntryRoute =
+  AuthenticatedSalesSalesEntryRouteImport.update({
+    id: '/sales/sales-entry',
+    path: '/sales/sales-entry',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSalesSalesReturnRoute =
+  AuthenticatedSalesSalesReturnRouteImport.update({
+    id: '/sales/sales-return',
+    path: '/sales/sales-return',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSetupCategoryRoute =
+  AuthenticatedSetupCategoryRouteImport.update({
+    id: '/setup/category',
+    path: '/setup/category',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSetupPackingRoute =
+  AuthenticatedSetupPackingRouteImport.update({
+    id: '/setup/packing',
+    path: '/setup/packing',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSetupProductsRoute =
+  AuthenticatedSetupProductsRouteImport.update({
+    id: '/setup/products',
+    path: '/setup/products',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSetupTaxTypeRoute =
+  AuthenticatedSetupTaxTypeRouteImport.update({
+    id: '/setup/tax-type',
+    path: '/setup/tax-type',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSetupUnitRoute = AuthenticatedSetupUnitRouteImport.update({
+  id: '/setup/unit',
+  path: '/setup/unit',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
   '/login': typeof LoginRoute
+  '/reports': typeof AuthenticatedReportsRoute
+  '/roles-permissions': typeof AuthenticatedRolesPermissionsRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/user': typeof AuthenticatedUserRoute
+  '/accounting/account-master': typeof AuthenticatedAccountingAccountMasterRoute
+  '/accounting/journal-entry': typeof AuthenticatedAccountingJournalEntryRoute
+  '/accounting/opening-balance': typeof AuthenticatedAccountingOpeningBalanceRoute
+  '/accounting/payment': typeof AuthenticatedAccountingPaymentRoute
+  '/accounting/payment-adjustment': typeof AuthenticatedAccountingPaymentAdjustmentRoute
+  '/inventory/opening-stock': typeof AuthenticatedInventoryOpeningStockRoute
+  '/inventory/stock-adjustment': typeof AuthenticatedInventoryStockAdjustmentRoute
+  '/inventory/stock-edit': typeof AuthenticatedInventoryStockEditRoute
+  '/purchase/purchase-entry': typeof AuthenticatedPurchasePurchaseEntryRoute
+  '/purchase/purchase-return': typeof AuthenticatedPurchasePurchaseReturnRoute
+  '/purchase/vendor': typeof AuthenticatedPurchaseVendorRoute
+  '/sales/customer': typeof AuthenticatedSalesCustomerRoute
+  '/sales/sales-entry': typeof AuthenticatedSalesSalesEntryRoute
+  '/sales/sales-return': typeof AuthenticatedSalesSalesReturnRoute
+  '/setup/category': typeof AuthenticatedSetupCategoryRoute
+  '/setup/packing': typeof AuthenticatedSetupPackingRoute
+  '/setup/products': typeof AuthenticatedSetupProductsRoute
+  '/setup/tax-type': typeof AuthenticatedSetupTaxTypeRoute
+  '/setup/unit': typeof AuthenticatedSetupUnitRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
+  '/reports': typeof AuthenticatedReportsRoute
+  '/roles-permissions': typeof AuthenticatedRolesPermissionsRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/user': typeof AuthenticatedUserRoute
   '/': typeof AuthenticatedIndexRoute
+  '/accounting/account-master': typeof AuthenticatedAccountingAccountMasterRoute
+  '/accounting/journal-entry': typeof AuthenticatedAccountingJournalEntryRoute
+  '/accounting/opening-balance': typeof AuthenticatedAccountingOpeningBalanceRoute
+  '/accounting/payment': typeof AuthenticatedAccountingPaymentRoute
+  '/accounting/payment-adjustment': typeof AuthenticatedAccountingPaymentAdjustmentRoute
+  '/inventory/opening-stock': typeof AuthenticatedInventoryOpeningStockRoute
+  '/inventory/stock-adjustment': typeof AuthenticatedInventoryStockAdjustmentRoute
+  '/inventory/stock-edit': typeof AuthenticatedInventoryStockEditRoute
+  '/purchase/purchase-entry': typeof AuthenticatedPurchasePurchaseEntryRoute
+  '/purchase/purchase-return': typeof AuthenticatedPurchasePurchaseReturnRoute
+  '/purchase/vendor': typeof AuthenticatedPurchaseVendorRoute
+  '/sales/customer': typeof AuthenticatedSalesCustomerRoute
+  '/sales/sales-entry': typeof AuthenticatedSalesSalesEntryRoute
+  '/sales/sales-return': typeof AuthenticatedSalesSalesReturnRoute
+  '/setup/category': typeof AuthenticatedSetupCategoryRoute
+  '/setup/packing': typeof AuthenticatedSetupPackingRoute
+  '/setup/products': typeof AuthenticatedSetupProductsRoute
+  '/setup/tax-type': typeof AuthenticatedSetupTaxTypeRoute
+  '/setup/unit': typeof AuthenticatedSetupUnitRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/login': typeof LoginRoute
+  '/_authenticated/reports': typeof AuthenticatedReportsRoute
+  '/_authenticated/roles-permissions': typeof AuthenticatedRolesPermissionsRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/user': typeof AuthenticatedUserRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/accounting/account-master': typeof AuthenticatedAccountingAccountMasterRoute
+  '/_authenticated/accounting/journal-entry': typeof AuthenticatedAccountingJournalEntryRoute
+  '/_authenticated/accounting/opening-balance': typeof AuthenticatedAccountingOpeningBalanceRoute
+  '/_authenticated/accounting/payment': typeof AuthenticatedAccountingPaymentRoute
+  '/_authenticated/accounting/payment-adjustment': typeof AuthenticatedAccountingPaymentAdjustmentRoute
+  '/_authenticated/inventory/opening-stock': typeof AuthenticatedInventoryOpeningStockRoute
+  '/_authenticated/inventory/stock-adjustment': typeof AuthenticatedInventoryStockAdjustmentRoute
+  '/_authenticated/inventory/stock-edit': typeof AuthenticatedInventoryStockEditRoute
+  '/_authenticated/purchase/purchase-entry': typeof AuthenticatedPurchasePurchaseEntryRoute
+  '/_authenticated/purchase/purchase-return': typeof AuthenticatedPurchasePurchaseReturnRoute
+  '/_authenticated/purchase/vendor': typeof AuthenticatedPurchaseVendorRoute
+  '/_authenticated/sales/customer': typeof AuthenticatedSalesCustomerRoute
+  '/_authenticated/sales/sales-entry': typeof AuthenticatedSalesSalesEntryRoute
+  '/_authenticated/sales/sales-return': typeof AuthenticatedSalesSalesReturnRoute
+  '/_authenticated/setup/category': typeof AuthenticatedSetupCategoryRoute
+  '/_authenticated/setup/packing': typeof AuthenticatedSetupPackingRoute
+  '/_authenticated/setup/products': typeof AuthenticatedSetupProductsRoute
+  '/_authenticated/setup/tax-type': typeof AuthenticatedSetupTaxTypeRoute
+  '/_authenticated/setup/unit': typeof AuthenticatedSetupUnitRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/reports'
+    | '/roles-permissions'
+    | '/settings'
+    | '/user'
+    | '/accounting/account-master'
+    | '/accounting/journal-entry'
+    | '/accounting/opening-balance'
+    | '/accounting/payment'
+    | '/accounting/payment-adjustment'
+    | '/inventory/opening-stock'
+    | '/inventory/stock-adjustment'
+    | '/inventory/stock-edit'
+    | '/purchase/purchase-entry'
+    | '/purchase/purchase-return'
+    | '/purchase/vendor'
+    | '/sales/customer'
+    | '/sales/sales-entry'
+    | '/sales/sales-return'
+    | '/setup/category'
+    | '/setup/packing'
+    | '/setup/products'
+    | '/setup/tax-type'
+    | '/setup/unit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/'
-  id: '__root__' | '/_authenticated' | '/login' | '/_authenticated/'
+  to:
+    | '/login'
+    | '/reports'
+    | '/roles-permissions'
+    | '/settings'
+    | '/user'
+    | '/'
+    | '/accounting/account-master'
+    | '/accounting/journal-entry'
+    | '/accounting/opening-balance'
+    | '/accounting/payment'
+    | '/accounting/payment-adjustment'
+    | '/inventory/opening-stock'
+    | '/inventory/stock-adjustment'
+    | '/inventory/stock-edit'
+    | '/purchase/purchase-entry'
+    | '/purchase/purchase-return'
+    | '/purchase/vendor'
+    | '/sales/customer'
+    | '/sales/sales-entry'
+    | '/sales/sales-return'
+    | '/setup/category'
+    | '/setup/packing'
+    | '/setup/products'
+    | '/setup/tax-type'
+    | '/setup/unit'
+  id:
+    | '__root__'
+    | '/_authenticated'
+    | '/login'
+    | '/_authenticated/reports'
+    | '/_authenticated/roles-permissions'
+    | '/_authenticated/settings'
+    | '/_authenticated/user'
+    | '/_authenticated/'
+    | '/_authenticated/accounting/account-master'
+    | '/_authenticated/accounting/journal-entry'
+    | '/_authenticated/accounting/opening-balance'
+    | '/_authenticated/accounting/payment'
+    | '/_authenticated/accounting/payment-adjustment'
+    | '/_authenticated/inventory/opening-stock'
+    | '/_authenticated/inventory/stock-adjustment'
+    | '/_authenticated/inventory/stock-edit'
+    | '/_authenticated/purchase/purchase-entry'
+    | '/_authenticated/purchase/purchase-return'
+    | '/_authenticated/purchase/vendor'
+    | '/_authenticated/sales/customer'
+    | '/_authenticated/sales/sales-entry'
+    | '/_authenticated/sales/sales-return'
+    | '/_authenticated/setup/category'
+    | '/_authenticated/setup/packing'
+    | '/_authenticated/setup/products'
+    | '/_authenticated/setup/tax-type'
+    | '/_authenticated/setup/unit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -78,15 +381,230 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/reports': {
+      id: '/_authenticated/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AuthenticatedReportsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/roles-permissions': {
+      id: '/_authenticated/roles-permissions'
+      path: '/roles-permissions'
+      fullPath: '/roles-permissions'
+      preLoaderRoute: typeof AuthenticatedRolesPermissionsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/user': {
+      id: '/_authenticated/user'
+      path: '/user'
+      fullPath: '/user'
+      preLoaderRoute: typeof AuthenticatedUserRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/accounting/account-master': {
+      id: '/_authenticated/accounting/account-master'
+      path: '/accounting/account-master'
+      fullPath: '/accounting/account-master'
+      preLoaderRoute: typeof AuthenticatedAccountingAccountMasterRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/accounting/journal-entry': {
+      id: '/_authenticated/accounting/journal-entry'
+      path: '/accounting/journal-entry'
+      fullPath: '/accounting/journal-entry'
+      preLoaderRoute: typeof AuthenticatedAccountingJournalEntryRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/accounting/opening-balance': {
+      id: '/_authenticated/accounting/opening-balance'
+      path: '/accounting/opening-balance'
+      fullPath: '/accounting/opening-balance'
+      preLoaderRoute: typeof AuthenticatedAccountingOpeningBalanceRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/accounting/payment': {
+      id: '/_authenticated/accounting/payment'
+      path: '/accounting/payment'
+      fullPath: '/accounting/payment'
+      preLoaderRoute: typeof AuthenticatedAccountingPaymentRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/accounting/payment-adjustment': {
+      id: '/_authenticated/accounting/payment-adjustment'
+      path: '/accounting/payment-adjustment'
+      fullPath: '/accounting/payment-adjustment'
+      preLoaderRoute: typeof AuthenticatedAccountingPaymentAdjustmentRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/inventory/opening-stock': {
+      id: '/_authenticated/inventory/opening-stock'
+      path: '/inventory/opening-stock'
+      fullPath: '/inventory/opening-stock'
+      preLoaderRoute: typeof AuthenticatedInventoryOpeningStockRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/inventory/stock-adjustment': {
+      id: '/_authenticated/inventory/stock-adjustment'
+      path: '/inventory/stock-adjustment'
+      fullPath: '/inventory/stock-adjustment'
+      preLoaderRoute: typeof AuthenticatedInventoryStockAdjustmentRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/inventory/stock-edit': {
+      id: '/_authenticated/inventory/stock-edit'
+      path: '/inventory/stock-edit'
+      fullPath: '/inventory/stock-edit'
+      preLoaderRoute: typeof AuthenticatedInventoryStockEditRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/purchase/purchase-entry': {
+      id: '/_authenticated/purchase/purchase-entry'
+      path: '/purchase/purchase-entry'
+      fullPath: '/purchase/purchase-entry'
+      preLoaderRoute: typeof AuthenticatedPurchasePurchaseEntryRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/purchase/purchase-return': {
+      id: '/_authenticated/purchase/purchase-return'
+      path: '/purchase/purchase-return'
+      fullPath: '/purchase/purchase-return'
+      preLoaderRoute: typeof AuthenticatedPurchasePurchaseReturnRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/purchase/vendor': {
+      id: '/_authenticated/purchase/vendor'
+      path: '/purchase/vendor'
+      fullPath: '/purchase/vendor'
+      preLoaderRoute: typeof AuthenticatedPurchaseVendorRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/sales/customer': {
+      id: '/_authenticated/sales/customer'
+      path: '/sales/customer'
+      fullPath: '/sales/customer'
+      preLoaderRoute: typeof AuthenticatedSalesCustomerRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/sales/sales-entry': {
+      id: '/_authenticated/sales/sales-entry'
+      path: '/sales/sales-entry'
+      fullPath: '/sales/sales-entry'
+      preLoaderRoute: typeof AuthenticatedSalesSalesEntryRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/sales/sales-return': {
+      id: '/_authenticated/sales/sales-return'
+      path: '/sales/sales-return'
+      fullPath: '/sales/sales-return'
+      preLoaderRoute: typeof AuthenticatedSalesSalesReturnRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/setup/category': {
+      id: '/_authenticated/setup/category'
+      path: '/setup/category'
+      fullPath: '/setup/category'
+      preLoaderRoute: typeof AuthenticatedSetupCategoryRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/setup/packing': {
+      id: '/_authenticated/setup/packing'
+      path: '/setup/packing'
+      fullPath: '/setup/packing'
+      preLoaderRoute: typeof AuthenticatedSetupPackingRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/setup/products': {
+      id: '/_authenticated/setup/products'
+      path: '/setup/products'
+      fullPath: '/setup/products'
+      preLoaderRoute: typeof AuthenticatedSetupProductsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/setup/tax-type': {
+      id: '/_authenticated/setup/tax-type'
+      path: '/setup/tax-type'
+      fullPath: '/setup/tax-type'
+      preLoaderRoute: typeof AuthenticatedSetupTaxTypeRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/setup/unit': {
+      id: '/_authenticated/setup/unit'
+      path: '/setup/unit'
+      fullPath: '/setup/unit'
+      preLoaderRoute: typeof AuthenticatedSetupUnitRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
+  AuthenticatedRolesPermissionsRoute: typeof AuthenticatedRolesPermissionsRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedUserRoute: typeof AuthenticatedUserRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedAccountingAccountMasterRoute: typeof AuthenticatedAccountingAccountMasterRoute
+  AuthenticatedAccountingJournalEntryRoute: typeof AuthenticatedAccountingJournalEntryRoute
+  AuthenticatedAccountingOpeningBalanceRoute: typeof AuthenticatedAccountingOpeningBalanceRoute
+  AuthenticatedAccountingPaymentRoute: typeof AuthenticatedAccountingPaymentRoute
+  AuthenticatedAccountingPaymentAdjustmentRoute: typeof AuthenticatedAccountingPaymentAdjustmentRoute
+  AuthenticatedInventoryOpeningStockRoute: typeof AuthenticatedInventoryOpeningStockRoute
+  AuthenticatedInventoryStockAdjustmentRoute: typeof AuthenticatedInventoryStockAdjustmentRoute
+  AuthenticatedInventoryStockEditRoute: typeof AuthenticatedInventoryStockEditRoute
+  AuthenticatedPurchasePurchaseEntryRoute: typeof AuthenticatedPurchasePurchaseEntryRoute
+  AuthenticatedPurchasePurchaseReturnRoute: typeof AuthenticatedPurchasePurchaseReturnRoute
+  AuthenticatedPurchaseVendorRoute: typeof AuthenticatedPurchaseVendorRoute
+  AuthenticatedSalesCustomerRoute: typeof AuthenticatedSalesCustomerRoute
+  AuthenticatedSalesSalesEntryRoute: typeof AuthenticatedSalesSalesEntryRoute
+  AuthenticatedSalesSalesReturnRoute: typeof AuthenticatedSalesSalesReturnRoute
+  AuthenticatedSetupCategoryRoute: typeof AuthenticatedSetupCategoryRoute
+  AuthenticatedSetupPackingRoute: typeof AuthenticatedSetupPackingRoute
+  AuthenticatedSetupProductsRoute: typeof AuthenticatedSetupProductsRoute
+  AuthenticatedSetupTaxTypeRoute: typeof AuthenticatedSetupTaxTypeRoute
+  AuthenticatedSetupUnitRoute: typeof AuthenticatedSetupUnitRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedReportsRoute: AuthenticatedReportsRoute,
+  AuthenticatedRolesPermissionsRoute: AuthenticatedRolesPermissionsRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedUserRoute: AuthenticatedUserRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedAccountingAccountMasterRoute:
+    AuthenticatedAccountingAccountMasterRoute,
+  AuthenticatedAccountingJournalEntryRoute:
+    AuthenticatedAccountingJournalEntryRoute,
+  AuthenticatedAccountingOpeningBalanceRoute:
+    AuthenticatedAccountingOpeningBalanceRoute,
+  AuthenticatedAccountingPaymentRoute: AuthenticatedAccountingPaymentRoute,
+  AuthenticatedAccountingPaymentAdjustmentRoute:
+    AuthenticatedAccountingPaymentAdjustmentRoute,
+  AuthenticatedInventoryOpeningStockRoute:
+    AuthenticatedInventoryOpeningStockRoute,
+  AuthenticatedInventoryStockAdjustmentRoute:
+    AuthenticatedInventoryStockAdjustmentRoute,
+  AuthenticatedInventoryStockEditRoute: AuthenticatedInventoryStockEditRoute,
+  AuthenticatedPurchasePurchaseEntryRoute:
+    AuthenticatedPurchasePurchaseEntryRoute,
+  AuthenticatedPurchasePurchaseReturnRoute:
+    AuthenticatedPurchasePurchaseReturnRoute,
+  AuthenticatedPurchaseVendorRoute: AuthenticatedPurchaseVendorRoute,
+  AuthenticatedSalesCustomerRoute: AuthenticatedSalesCustomerRoute,
+  AuthenticatedSalesSalesEntryRoute: AuthenticatedSalesSalesEntryRoute,
+  AuthenticatedSalesSalesReturnRoute: AuthenticatedSalesSalesReturnRoute,
+  AuthenticatedSetupCategoryRoute: AuthenticatedSetupCategoryRoute,
+  AuthenticatedSetupPackingRoute: AuthenticatedSetupPackingRoute,
+  AuthenticatedSetupProductsRoute: AuthenticatedSetupProductsRoute,
+  AuthenticatedSetupTaxTypeRoute: AuthenticatedSetupTaxTypeRoute,
+  AuthenticatedSetupUnitRoute: AuthenticatedSetupUnitRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
