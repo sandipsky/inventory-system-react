@@ -1,0 +1,75 @@
+/* Shared page-section card classes (ported from the Angular _section.scss). */
+
+.section {
+    padding: 12px;
+    align-self: stretch;
+    border-radius: 12px;
+    border: 1px solid var(--separator);
+    background: var(--bg-lightest);
+}
+
+.section.section-dark {
+    background: var(--bg-light);
+}
+
+.section.main {
+    margin: 12px;
+    padding: 0;
+}
+
+.section.main .table-responsive {
+    height: calc(100vh - 225px);
+}
+
+.section.main .section-content.scrollable {
+    max-height: calc(100vh - 150px);
+}
+
+.section.main:has(.filter-options) .table-responsive {
+    height: calc(100vh - 300px);
+}
+
+.section .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px;
+    border-bottom: 1px solid var(--separator);
+    row-gap: 12px;
+    flex-wrap: wrap;
+}
+
+.section .section-header .section-header-btn-group {
+    display: flex;
+    gap: 8px;
+    row-gap: 12px;
+    flex-wrap: wrap;
+}
+
+.section .section-content {
+    padding: 12px;
+}
+
+.section .section-content .paginator {
+    margin-top: 16px;
+}
+
+.section.group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.section-title {
+    color: var(--text-primary);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 24px;
+}
+
+.section-sub-title {
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+}

@@ -26,16 +26,16 @@ export type RowJustify =
   | 'space-evenly';
 export type RowAlign = 'top' | 'middle' | 'bottom' | 'stretch';
 
-const COLUMNS = 24;
+const COLUMNS = 12;
 
-/** Ant Design's responsive breakpoints (min-widths, px). */
+/** Bootstrap's responsive breakpoints (min-widths, px). */
 const BREAKPOINT_MIN_WIDTH: Record<GridBreakpoint, number> = {
   xs: 0,
   sm: 576,
   md: 768,
   lg: 992,
   xl: 1200,
-  xxl: 1600,
+  xxl: 1400,
 };
 const BREAKPOINT_ORDER: GridBreakpoint[] = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
 
@@ -75,14 +75,14 @@ export interface LUIRowProps extends ComponentPropsWithRef<'div'> {
 }
 
 /**
- * 24-column grid row inspired by Ant Design's `Row`. Hosts `LUICol` children and
- * hands them the horizontal `gutter` (cols pad themselves; the row cancels the
- * outer padding with negative margins). A `[h, v]` gutter adds vertical space
+ * 12-column grid row, Bootstrap-style. Hosts `LUICol` children and hands them
+ * the horizontal `gutter` (cols pad themselves; the row cancels the outer
+ * padding with negative margins). A `[h, v]` gutter adds vertical space
  * between wrapped lines via `row-gap`.
  *
  * ```tsx
  * <LUIRow gutter={[16, 16]} justify="center" align="middle">
- *   <LUICol span={12} md={8}>…</LUICol>
+ *   <LUICol span={6} md={4}>…</LUICol>
  * </LUIRow>
  * ```
  */
@@ -122,9 +122,9 @@ export function LUIRow({
 }
 
 export interface LUIColProps extends ComponentPropsWithRef<'div'> {
-  /** Columns to span out of 24. `0` hides the column. Unset → sized by content (or `flex`). */
+  /** Columns to span out of 12. `0` hides the column. Unset → sized by content (or `flex`). */
   span?: number | null;
-  /** Columns to skip on the left, out of 24. */
+  /** Columns to skip on the left, out of 12. */
   offset?: number;
   order?: number | null;
   /** CSS `flex` shorthand — `'auto'` (fill), a grow number, or e.g. `'0 0 200px'`. */
@@ -139,7 +139,7 @@ export interface LUIColProps extends ComponentPropsWithRef<'div'> {
 }
 
 /**
- * Grid column for `LUIRow`, on a 24-column track. `span`/`offset`/`order` are the
+ * Grid column for `LUIRow`, on a 12-column track. `span`/`offset`/`order` are the
  * base values; the `xs`…`xxl` props override them per breakpoint, mobile-first
  * (the largest matching breakpoint wins). `span: 0` hides the column. `flex`
  * takes precedence over `span` for fill/fixed-width columns.
