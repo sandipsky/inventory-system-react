@@ -55,11 +55,11 @@ export const SIDEBAR_ITEMS: readonly SidebarItemData[] = [
     children: [
       { icon: '🏷️', label: 'Category', to: '/setup/category' },
       { icon: '📐', label: 'Packing', to: '/setup/packing' },
-      { icon: '📦', label: 'Products', to: '/setup/products' },
       { icon: '💹', label: 'Tax Type', to: '/setup/tax-type' },
       { icon: '📏', label: 'Unit', to: '/setup/unit' },
     ],
   },
+  { icon: '📦', label: 'Products', to: '/products' },
   { icon: '📈', label: 'Reports', to: '/reports' },
   { icon: '🔐', label: 'Roles & Permissions', to: '/roles-permissions' },
   { icon: '👥', label: 'Users', to: '/user' },

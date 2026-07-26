@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedProductsRouteImport } from './routes/_authenticated/products'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedRolesPermissionsRouteImport } from './routes/_authenticated/roles-permissions'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
@@ -32,7 +33,6 @@ import { Route as AuthenticatedSalesSalesEntryRouteImport } from './routes/_auth
 import { Route as AuthenticatedSalesSalesReturnRouteImport } from './routes/_authenticated/sales/sales-return'
 import { Route as AuthenticatedSetupCategoryRouteImport } from './routes/_authenticated/setup/category'
 import { Route as AuthenticatedSetupPackingRouteImport } from './routes/_authenticated/setup/packing'
-import { Route as AuthenticatedSetupProductsRouteImport } from './routes/_authenticated/setup/products'
 import { Route as AuthenticatedSetupTaxTypeRouteImport } from './routes/_authenticated/setup/tax-type'
 import { Route as AuthenticatedSetupUnitRouteImport } from './routes/_authenticated/setup/unit'
 
@@ -48,6 +48,11 @@ const LoginRoute = LoginRouteImport.update({
 const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedProductsRoute = AuthenticatedProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
@@ -167,12 +172,6 @@ const AuthenticatedSetupPackingRoute =
     path: '/setup/packing',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
-const AuthenticatedSetupProductsRoute =
-  AuthenticatedSetupProductsRouteImport.update({
-    id: '/setup/products',
-    path: '/setup/products',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
 const AuthenticatedSetupTaxTypeRoute =
   AuthenticatedSetupTaxTypeRouteImport.update({
     id: '/setup/tax-type',
@@ -188,6 +187,7 @@ const AuthenticatedSetupUnitRoute = AuthenticatedSetupUnitRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
   '/login': typeof LoginRoute
+  '/products': typeof AuthenticatedProductsRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/roles-permissions': typeof AuthenticatedRolesPermissionsRoute
   '/settings': typeof AuthenticatedSettingsRoute
@@ -208,12 +208,12 @@ export interface FileRoutesByFullPath {
   '/sales/sales-return': typeof AuthenticatedSalesSalesReturnRoute
   '/setup/category': typeof AuthenticatedSetupCategoryRoute
   '/setup/packing': typeof AuthenticatedSetupPackingRoute
-  '/setup/products': typeof AuthenticatedSetupProductsRoute
   '/setup/tax-type': typeof AuthenticatedSetupTaxTypeRoute
   '/setup/unit': typeof AuthenticatedSetupUnitRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
+  '/products': typeof AuthenticatedProductsRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/roles-permissions': typeof AuthenticatedRolesPermissionsRoute
   '/settings': typeof AuthenticatedSettingsRoute
@@ -235,7 +235,6 @@ export interface FileRoutesByTo {
   '/sales/sales-return': typeof AuthenticatedSalesSalesReturnRoute
   '/setup/category': typeof AuthenticatedSetupCategoryRoute
   '/setup/packing': typeof AuthenticatedSetupPackingRoute
-  '/setup/products': typeof AuthenticatedSetupProductsRoute
   '/setup/tax-type': typeof AuthenticatedSetupTaxTypeRoute
   '/setup/unit': typeof AuthenticatedSetupUnitRoute
 }
@@ -243,6 +242,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/login': typeof LoginRoute
+  '/_authenticated/products': typeof AuthenticatedProductsRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/roles-permissions': typeof AuthenticatedRolesPermissionsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
@@ -264,7 +264,6 @@ export interface FileRoutesById {
   '/_authenticated/sales/sales-return': typeof AuthenticatedSalesSalesReturnRoute
   '/_authenticated/setup/category': typeof AuthenticatedSetupCategoryRoute
   '/_authenticated/setup/packing': typeof AuthenticatedSetupPackingRoute
-  '/_authenticated/setup/products': typeof AuthenticatedSetupProductsRoute
   '/_authenticated/setup/tax-type': typeof AuthenticatedSetupTaxTypeRoute
   '/_authenticated/setup/unit': typeof AuthenticatedSetupUnitRoute
 }
@@ -273,6 +272,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/login'
+    | '/products'
     | '/reports'
     | '/roles-permissions'
     | '/settings'
@@ -293,12 +293,12 @@ export interface FileRouteTypes {
     | '/sales/sales-return'
     | '/setup/category'
     | '/setup/packing'
-    | '/setup/products'
     | '/setup/tax-type'
     | '/setup/unit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
+    | '/products'
     | '/reports'
     | '/roles-permissions'
     | '/settings'
@@ -320,13 +320,13 @@ export interface FileRouteTypes {
     | '/sales/sales-return'
     | '/setup/category'
     | '/setup/packing'
-    | '/setup/products'
     | '/setup/tax-type'
     | '/setup/unit'
   id:
     | '__root__'
     | '/_authenticated'
     | '/login'
+    | '/_authenticated/products'
     | '/_authenticated/reports'
     | '/_authenticated/roles-permissions'
     | '/_authenticated/settings'
@@ -348,7 +348,6 @@ export interface FileRouteTypes {
     | '/_authenticated/sales/sales-return'
     | '/_authenticated/setup/category'
     | '/_authenticated/setup/packing'
-    | '/_authenticated/setup/products'
     | '/_authenticated/setup/tax-type'
     | '/_authenticated/setup/unit'
   fileRoutesById: FileRoutesById
@@ -379,6 +378,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/products': {
+      id: '/_authenticated/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof AuthenticatedProductsRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/reports': {
@@ -521,13 +527,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSetupPackingRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/_authenticated/setup/products': {
-      id: '/_authenticated/setup/products'
-      path: '/setup/products'
-      fullPath: '/setup/products'
-      preLoaderRoute: typeof AuthenticatedSetupProductsRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
     '/_authenticated/setup/tax-type': {
       id: '/_authenticated/setup/tax-type'
       path: '/setup/tax-type'
@@ -546,6 +545,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedProductsRoute: typeof AuthenticatedProductsRoute
   AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedRolesPermissionsRoute: typeof AuthenticatedRolesPermissionsRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
@@ -567,12 +567,12 @@ interface AuthenticatedRouteChildren {
   AuthenticatedSalesSalesReturnRoute: typeof AuthenticatedSalesSalesReturnRoute
   AuthenticatedSetupCategoryRoute: typeof AuthenticatedSetupCategoryRoute
   AuthenticatedSetupPackingRoute: typeof AuthenticatedSetupPackingRoute
-  AuthenticatedSetupProductsRoute: typeof AuthenticatedSetupProductsRoute
   AuthenticatedSetupTaxTypeRoute: typeof AuthenticatedSetupTaxTypeRoute
   AuthenticatedSetupUnitRoute: typeof AuthenticatedSetupUnitRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedProductsRoute: AuthenticatedProductsRoute,
   AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedRolesPermissionsRoute: AuthenticatedRolesPermissionsRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
@@ -602,7 +602,6 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedSalesSalesReturnRoute: AuthenticatedSalesSalesReturnRoute,
   AuthenticatedSetupCategoryRoute: AuthenticatedSetupCategoryRoute,
   AuthenticatedSetupPackingRoute: AuthenticatedSetupPackingRoute,
-  AuthenticatedSetupProductsRoute: AuthenticatedSetupProductsRoute,
   AuthenticatedSetupTaxTypeRoute: AuthenticatedSetupTaxTypeRoute,
   AuthenticatedSetupUnitRoute: AuthenticatedSetupUnitRoute,
 }

@@ -46,7 +46,7 @@ export function LUIMainLayout({ header, singleOpenGroup = true, children }: LUIM
   return (
     <div className="l-main-layout">
       <LUISidebar ref={sidebar} collapsed={collapsed} onCollapsedChange={setCollapsed}>
-        <div className="l-main-layout__brand">L</div>
+        <div className="l-main-layout__brand">ABIS</div>
         <nav className="l-main-layout__nav">
           {SIDEBAR_ITEMS.map((item) =>
             item.children ? (
