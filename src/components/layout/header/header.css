@@ -1,16 +1,16 @@
-.l-header {
-  --l-header-height: 40px;
+.header {
+  --header-height: 40px;
 
   display: flex;
   align-items: center;
   gap: 8px;
-  height: var(--l-header-height);
+  height: var(--header-height);
   padding: 0 12px;
   background: var(--bg-lightest);
   border-bottom: 1px solid var(--separator);
 }
 
-.l-header__menu {
+.header .menu-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -34,7 +34,7 @@
   }
 }
 
-.l-header__content {
+.header-content {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -43,7 +43,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .l-header__menu {
+  .header .menu-button {
     transition: none;
   }
 }

@@ -18,19 +18,16 @@
     --premium: #AB20A9;
     --premium-bg: #FBCEFA;
 
-    /* ================= Text Colors ================= */
     --text-primary: #07090F;
     --text-secondary: #555755;
     --text-tertiary: #646663;
     --text-quaternary: #979996;
     --text-white: #F9FAFB;
 
-    /* ================= Separators ================= */
     --separator: #E5E7EB;
     --separator-light: #EBEDEB;
     --separator-dark: #DDE0DC;
 
-    /* ================= Backgrounds ================= */
     --bg-lightest: #FEFEFE;
     --bg-light: #F7F7F7;
     --bg-semi-light: #F6F7F5;

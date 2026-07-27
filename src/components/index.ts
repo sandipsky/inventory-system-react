@@ -1,20 +1,9 @@
-/**
- * Barrel for the LumenUI component library.
- * Import anything as `import { LUIButton, LUIModalProvider, ... } from '<path>/components'`.
- *
- * Folders with their own index.ts (drawer, filter, layout, loading-spinner, modal, table)
- * are re-exported through it so internal pieces (containers, date libs) stay private.
- */
-
-/* All-in-one provider (notification + spinner + modal + drawer) */
 export * from './provider/provider';
 
-/* Layout (app shell) */
 export * from './layout/header/header';
 export * from './layout/main-layout/main-layout';
 export * from './layout/sidebar/sidebar';
 
-/* UI */
 export * from './ui/accordion/accordion';
 export * from './ui/accordion/accordion-item';
 export * from './ui/avatar/avatar';
@@ -40,7 +29,6 @@ export * from './ui/tooltip/tooltip';
 export * from './ui/tree/tree';
 export * from './ui/tree/tree-item';
 
-/* Inputs */
 export * from './ui/input/checkbox/checkbox';
 export * from './ui/input/date-input/date-input';
 export * from './ui/input/email-input/email-input';

@@ -161,7 +161,6 @@
 
 .scrollable { overflow: auto; }
 
-/* Print utilities */
 .print-only { display: none; }
 
 @media print {

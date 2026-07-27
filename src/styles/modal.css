@@ -1,7 +1,3 @@
-/* Shared modal/drawer content classes (ported from the Angular _modal.scss).
-   The two Angular-Material host rules (.mat-mdc-dialog-container,
-   .cdk-overlay-pane) were dropped — that DOM doesn't exist here. */
-
 .modal {
     border-radius: 12px;
     background: var(--bg-lightest);

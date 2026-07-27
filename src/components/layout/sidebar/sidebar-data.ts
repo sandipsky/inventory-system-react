@@ -1,14 +1,10 @@
-/** Shape of one sidebar nav entry rendered by `LUISidebarItem`. */
 export interface SidebarItemData {
   icon: string;
   label: string;
-  /** Route path this entry navigates to. Omitted for group headers. */
   to?: string;
-  /** Providing children turns the entry into a collapsible group. */
   children?: readonly SidebarItemData[];
 }
 
-/** Nav entries mirroring the `src/features` folder, looped over by `LUIMainLayout`. */
 export const SIDEBAR_ITEMS: readonly SidebarItemData[] = [
   { icon: '📊', label: 'Dashboard', to: '/' },
   {

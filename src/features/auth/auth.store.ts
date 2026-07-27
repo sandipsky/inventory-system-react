@@ -19,6 +19,6 @@ export const useAuthStore = create<AuthState>()(
         window.location.href = '/login';   
       },
     }),
-    { name: 'auth' },   // localStorage key
+    { name: 'auth' },
   ),
 )

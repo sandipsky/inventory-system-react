@@ -1,38 +1,22 @@
-.l-main-layout {
+.main-layout {
   display: flex;
   height: 100vh;
   width: 100%;
   overflow: hidden;
 }
 
-.l-main-layout__main {
+.main-area {
   display: flex;
   flex-direction: column;
   flex: 1;
   min-width: 0;
 }
 
-.l-main-layout__content {
+.page-content {
   flex: 1;
   padding: 24px;
   overflow: auto;
   font-size: 14px;
   color: var(--text-secondary);
   background: var(--bg-light);
-}
-
-.l-main-layout__brand {
-  display: flex;
-  align-items: center;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 18px;
-  padding: 12px;
-}
-
-.l-main-layout__nav {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 12px;
 }

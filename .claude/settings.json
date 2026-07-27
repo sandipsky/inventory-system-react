@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -rlE '\\(//|/\\\\*\\)' src --include='*.ts' --include='*.tsx' --include='*.css')"
+    ]
+  }
+}

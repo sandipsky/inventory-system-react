@@ -2,36 +2,17 @@ import type { ReactNode } from 'react';
 import { LUITooltip } from '../../ui/tooltip/tooltip';
 import './sidebar-item.css';
 
-export interface LUISidebarItemProps {
-  /** Leading icon; hidden label-only rendering when omitted. */
+export interface SidebarItemProps {
   icon?: ReactNode;
-  /** Visible item text; also used as the tooltip when the rail is collapsed. */
   label: string;
-  /** Highlights the item as the current selection (leaf items only). */
   active?: boolean;
-  /**
-   * When `true` the rail is collapsed: only the icon shows, so the label is
-   * surfaced as a hover/focus tooltip on the right of the item.
-   */
   collapsed?: boolean;
-  /**
-   * Group state: when the item has `children` it renders as a group header
-   * with a chevron; `expanded` controls whether the children are shown.
-   */
   expanded?: boolean;
-  /** Leaf items: select. Group items: toggle `expanded`. */
   onClick?: () => void;
-  /** Child items; providing them turns this item into a collapsible group. */
   children?: ReactNode;
 }
 
-/**
- * A single nav entry for the sidebar rail. Pass nested `LUISidebarItem`s as
- * `children` to render a collapsible group with a chevron (open/close it via
- * `expanded` + `onClick`). When the sidebar is collapsed on desktop only the
- * icon remains visible (the label is exposed via an `LUITooltip` on hover/focus).
- */
-export function LUISidebarItem({
+export function SidebarItem({
   icon,
   label,
   active = false,
@@ -39,14 +20,10 @@ export function LUISidebarItem({
   expanded = false,
   onClick,
   children,
-}: LUISidebarItemProps) {
+}: SidebarItemProps) {
   const isGroup = children != null;
 
-  const classes = [
-    'l-sidebar-item',
-    active ? 'l-sidebar-item--active' : '',
-    isGroup && expanded ? 'l-sidebar-item--expanded' : '',
-  ]
+  const classes = ['sidebar-item', active ? 'active' : '', isGroup && expanded ? 'expanded' : '']
     .filter(Boolean)
     .join(' ');
 
@@ -57,11 +34,11 @@ export function LUISidebarItem({
       onClick={onClick}
       aria-expanded={isGroup ? expanded : undefined}
     >
-      {icon != null && <span className="l-sidebar-item__icon">{icon}</span>}
-      <span className="l-sidebar-item__label">{label}</span>
+      {icon != null && <span className="item-icon">{icon}</span>}
+      <span className="item-label">{label}</span>
       {isGroup && (
         <svg
-          className="l-sidebar-item__chevron"
+          className="item-chevron"
           viewBox="0 0 20 20"
           width="14"
           height="14"
@@ -80,7 +57,6 @@ export function LUISidebarItem({
     </button>
   );
 
-  // Collapsed rail hides the label, so reveal it as a tooltip on the right.
   const trigger = collapsed ? (
     <LUITooltip content={label} placement="right">
       {button}
@@ -91,18 +67,11 @@ export function LUISidebarItem({
 
   if (!isGroup) return trigger;
 
-  const childrenClasses = [
-    'l-sidebar-item__children',
-    expanded ? 'l-sidebar-item__children--open' : '',
-  ]
-    .filter(Boolean)
-    .join(' ');
-
   return (
-    <div className="l-sidebar-item-group">
+    <div className="sidebar-group">
       {trigger}
-      <div className={childrenClasses}>
-        <div className="l-sidebar-item__children-inner">{children}</div>
+      <div className={expanded ? 'group-children open' : 'group-children'}>
+        <div className="group-children-inner">{children}</div>
       </div>
     </div>
   );

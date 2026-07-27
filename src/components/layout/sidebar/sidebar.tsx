@@ -1,119 +1,107 @@
-import { useEffect, useImperativeHandle, useState, type ReactNode, type Ref } from 'react';
+import { useEffect, useImperativeHandle, useState, type Ref } from 'react';
+import { useNavigate, useRouterState } from '@tanstack/react-router';
+import { SidebarItem } from './sidebar-item';
+import { SIDEBAR_ITEMS } from './sidebar-data';
 import './sidebar.css';
 
 /** Keep in sync with the media query in sidebar.css. */
 const MOBILE_BREAKPOINT = '(max-width: 768px)';
 
-/** Imperative handle exposed via the sidebar's `ref`. */
-export interface LUISidebarHandle {
-  /** Collapses/expands on desktop, opens/closes the drawer on mobile. */
+export interface SidebarHandle {
   toggle: () => void;
 }
 
-export interface LUISidebarProps {
-  /**
-   * Desktop state: `true` shrinks the rail from 200px to 70px.
-   * Controlled when provided (pair with `onCollapsedChange`); uncontrolled otherwise.
-   */
-  collapsed?: boolean;
-  onCollapsedChange?: (collapsed: boolean) => void;
-
-  /**
-   * Mobile state: `true` slides the drawer in over the content.
-   * Controlled when provided (pair with `onMobileOpenChange`); uncontrolled otherwise.
-   */
-  mobileOpen?: boolean;
-  onMobileOpenChange?: (open: boolean) => void;
-
-  className?: string;
-  children?: ReactNode;
-
-  /** Exposes {@link LUISidebarHandle} — e.g. to wire a header's `onMenuToggle` to `toggle()`. */
-  ref?: Ref<LUISidebarHandle>;
+export interface SidebarProps {
+  ref?: Ref<SidebarHandle>;
 }
 
-/**
- * Layout shell: a 200px navigation rail that collapses to 70px on desktop and
- * becomes a slide-in drawer with a backdrop below 768px. Escape closes the
- * mobile drawer. Nav content is passed as children.
- */
-export function LUISidebar({
-  collapsed,
-  onCollapsedChange,
-  mobileOpen,
-  onMobileOpenChange,
-  className,
-  children,
-  ref,
-}: LUISidebarProps) {
-  const [collapsedState, setCollapsedState] = useState(false);
-  const [mobileOpenState, setMobileOpenState] = useState(false);
+export function Sidebar({ ref }: SidebarProps) {
+  const navigate = useNavigate();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
 
-  const isCollapsed = collapsed ?? collapsedState;
-  const isOpen = mobileOpen ?? mobileOpenState;
-
-  const setCollapsed = (value: boolean) => {
-    setCollapsedState(value);
-    onCollapsedChange?.(value);
-  };
-
-  const setMobileOpen = (value: boolean) => {
-    setMobileOpenState(value);
-    onMobileOpenChange?.(value);
-  };
-
+  const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [openGroup, setOpenGroup] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(() => window.matchMedia(MOBILE_BREAKPOINT).matches);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(MOBILE_BREAKPOINT);
     const onChange = (event: MediaQueryListEvent) => {
       setIsMobile(event.matches);
-      // Leaving mobile view: never keep a stale open drawer behind the static rail.
-      if (!event.matches) {
-        setMobileOpenState(false);
-        onMobileOpenChange?.(false);
-      }
+      if (!event.matches) setMobileOpen(false);
     };
     mediaQuery.addEventListener('change', onChange);
     return () => mediaQuery.removeEventListener('change', onChange);
-  }, [onMobileOpenChange]);
+  }, []);
 
   useEffect(() => {
-    if (!isMobile || !isOpen) return;
+    if (!isMobile || !mobileOpen) return;
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setMobileOpenState(false);
-        onMobileOpenChange?.(false);
-      }
+      if (event.key === 'Escape') setMobileOpen(false);
     };
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
-  }, [isMobile, isOpen, onMobileOpenChange]);
+  }, [isMobile, mobileOpen]);
 
   useImperativeHandle(ref, () => ({
-    /** Collapses/expands on desktop, opens/closes the drawer on mobile. */
     toggle: () => {
-      if (isMobile) setMobileOpen(!isOpen);
-      else setCollapsed(!isCollapsed);
+      if (isMobile) setMobileOpen((open) => !open);
+      else setCollapsed((value) => !value);
     },
   }));
 
-  const hostClasses = [
-    'l-sidebar',
-    isCollapsed ? 'l-sidebar--collapsed' : '',
-    isOpen ? 'l-sidebar--open' : '',
-    className ?? '',
-  ]
+  const goTo = (to?: string) => {
+    if (to) navigate({ to });
+  };
+
+  const classes = ['sidebar', collapsed ? 'collapsed' : '', mobileOpen ? 'open' : '']
     .filter(Boolean)
     .join(' ');
 
   return (
-    <div className={hostClasses}>
-      {isMobile && isOpen && (
-        <div className="l-sidebar__backdrop" onClick={() => setMobileOpen(false)} />
+    <div className={classes}>
+      {isMobile && mobileOpen && (
+        <div className="sidebar-backdrop" onClick={() => setMobileOpen(false)} />
       )}
 
-      <aside className="l-sidebar__panel">{children}</aside>
+      <div className="sidebar-panel">
+        <div className="sidebar-brand">ABIS</div>
+
+        <div className="sidebar-nav">
+          {SIDEBAR_ITEMS.map((item) =>
+            item.children ? (
+              <SidebarItem
+                key={item.label}
+                icon={item.icon}
+                label={item.label}
+                collapsed={collapsed}
+                expanded={openGroup === item.label}
+                onClick={() => setOpenGroup(openGroup === item.label ? null : item.label)}
+              >
+                {item.children.map((child) => (
+                  <SidebarItem
+                    key={child.label}
+                    icon={child.icon}
+                    label={child.label}
+                    collapsed={collapsed}
+                    active={child.to === pathname}
+                    onClick={() => goTo(child.to)}
+                  />
+                ))}
+              </SidebarItem>
+            ) : (
+              <SidebarItem
+                key={item.label}
+                icon={item.icon}
+                label={item.label}
+                collapsed={collapsed}
+                active={item.to === pathname}
+                onClick={() => goTo(item.to)}
+              />
+            ),
+          )}
+        </div>
+      </div>
     </div>
   );
 }

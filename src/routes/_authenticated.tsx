@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
-import { LUIMainLayout } from '@/components'
+import { MainLayout } from '@/components'
 
 const isAuthenticated = true;
 
@@ -19,8 +19,8 @@ export const Route = createFileRoute('/_authenticated')({
 
 function AuthenticatedLayout() {
     return (
-        <LUIMainLayout>
+        <MainLayout>
             <Outlet />
-        </LUIMainLayout>
+        </MainLayout>
     )
 }
