@@ -1,46 +1,73 @@
-import { useNavigate } from "@tanstack/react-router";
-import { useLogin } from "../auth.query"
-import { useState } from "react";
-import { useAuthStore } from "../auth.store";
+import { useState } from 'react';
+import { useNavigate } from '@tanstack/react-router';
+import { LUIButton, LUIEmailInput, LUIPasswordInput, useLUINotification } from '@/components';
+import { useLogin } from '../auth.query';
+import { useAuthStore } from '../auth.store';
+import './loginpage.css';
 
 export const LoginPage = () => {
-    const login = useLogin();
-    const navigate = useNavigate();
+  const login = useLogin();
+  const navigate = useNavigate();
+  const notify = useLUINotification();
+  const setAuth = useAuthStore((s) => s.setAuth);
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    const setAuth = useAuthStore((s) => s.setAuth); 
+  const handleSubmit = () => {
+    login.mutate(
+      { email, password },
+      {
+        onSuccess: (data) => {
+          setAuth(data.token, data.user);
+          navigate({ to: '/' });
+        },
+        onError: (error) => {
+          notify.error('Login failed', error.message || 'Unable to sign in', {
+            position: 'bottom',
+          });
+        },
+      },
+    );
+  };
 
-    const handleLogin = () => {
-        login.mutate(
-            { email, password },
-            {
-                onSuccess: (data) => {
-                    setAuth(data.token, data.user);
-                    navigate({ to: '/products' });
-                },
-            },
-        )
-    }
+  return (
+    <div className="login-page">
+      <form
+        className="login-card"
+        onSubmit={(event) => {
+          event.preventDefault();
+          handleSubmit();
+        }}
+      >
+        <div className="login-header">
+          <div className="login-brand">ABIS</div>
+          <h1 className="login-title">Welcome back</h1>
+          <p className="login-subtitle">Sign in to your account to continue</p>
+        </div>
 
-    return (
-        <>
-            <h1>Login</h1>
+        <LUIEmailInput
+          label="Email"
+          placeholder="you@company.com"
+          autoComplete="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-            <div>
-                <label>Username</label>
-                <input value={email} onChange={(e) => setEmail(e.target.value)} type="text" />
-            </div>
+        <LUIPasswordInput
+          label="Password"
+          placeholder="Enter your password"
+          autoComplete="current-password"
+          required
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-            <div>
-                <label>Password</label>
-                <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" />
-            </div>
-
-            <button onClick={handleLogin} disabled={login.isPending} >Login</button>
-
-            {login.isError && login.error.message}
-        </>
-    )
-}
+        <LUIButton type="submit" size="lg" width="full" disabled={login.isPending}>
+          {login.isPending ? 'Logging in…' : 'Login'}
+        </LUIButton>
+      </form>
+    </div>
+  );
+};
