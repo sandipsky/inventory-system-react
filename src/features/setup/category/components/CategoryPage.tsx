@@ -1,6 +1,18 @@
+import { LUIButton, LUIFilter, LUIFlex } from "@/components"
+
 const CategoryPage = () => {
   return (
-    <div>CategoryPage</div>
+    <>
+      <LUIFlex justify="space-between" align="center">
+        <LUIFilter searchBy="name" ></LUIFilter>
+
+        <LUIButton>Add Category</LUIButton>
+      </LUIFlex>
+
+      <div className="section">
+
+      </div>
+    </>
   )
 }
 

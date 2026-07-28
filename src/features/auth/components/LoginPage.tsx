@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
-import { LUIButton, LUIEmailInput, LUIPasswordInput, useLUINotification } from '@/components';
+import { LUIButton, LUITextInput, LUIPasswordInput, useLUINotification } from '@/components';
 import { useLogin } from '../auth.query';
 import { useAuthStore } from '../auth.store';
 import './loginpage.css';
@@ -11,12 +11,12 @@ export const LoginPage = () => {
   const notify = useLUINotification();
   const setAuth = useAuthStore((s) => s.setAuth);
 
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = () => {
     login.mutate(
-      { email, password },
+      { username, password },
       {
         onSuccess: (data) => {
           setAuth(data.token, data.user);
@@ -46,13 +46,13 @@ export const LoginPage = () => {
           <p className="login-subtitle">Sign in to your account to continue</p>
         </div>
 
-        <LUIEmailInput
-          label="Email"
+        <LUITextInput
+          label="Username"
           placeholder="you@company.com"
-          autoComplete="email"
+          autoComplete="username"
           required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
         />
 
         <LUIPasswordInput
