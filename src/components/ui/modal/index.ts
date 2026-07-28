@@ -5,3 +5,5 @@ export { MODAL_DEFAULTS } from './modal.config';
 export type { ModalConfig, ModalAnimation } from './modal.config';
 export { LUIConfirmDialog } from './confirm-dialog';
 export type { ConfirmDialogData, LUIConfirmDialogProps } from './confirm-dialog';
+export { LUIModal } from './modal';
+export type { LUIModalProps } from './modal';
