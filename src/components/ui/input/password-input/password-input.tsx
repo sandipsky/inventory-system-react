@@ -5,6 +5,7 @@ import {
   type ComponentPropsWithRef,
   type KeyboardEvent,
 } from 'react';
+import '../form.css';
 import './password-input.css';
 
 export interface LUIPasswordInputProps

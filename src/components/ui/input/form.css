@@ -1,8 +1,15 @@
+/* Common form styles shared across LumenUI inputs. Type-specific styles live in
+   each component's own `.css` (e.g. toggle.css, checkbox.css, number-input.css). */
+
+/* LumenUI field components (LUITextInput, LUIPasswordInput, …) — block-level,
+   full width. The component root element carries `.lui-field`. */
 .lui-field {
   display: block;
   width: 100%;
 }
 
+/* Selection controls (LUIToggle, LUICheckbox, LUIRadio) are intrinsically
+   sized, not full-width. The component root element carries `.lui-control-host`. */
 .lui-control-host {
   display: block;
 }
@@ -59,6 +66,7 @@
   border: 1px solid var(--error);
 }
 
+/* Shared icon wrapper used by the password and email inputs. */
 .input-wrapper {
   position: relative;
   width: 100%;
@@ -92,6 +100,7 @@
   cursor: pointer;
 }
 
+/* Inline validation message shown under a field. */
 .alert {
   display: flex;
   padding: 4px 8px;
@@ -123,6 +132,9 @@
   background: var(--info-bg);
   color: var(--info);
 }
+
+/* ================= Selection controls (toggle / checkbox / radio) =================
+   Layout primitives shared by all three; each control's visuals live in its own css. */
 
 .control-row {
   display: inline-flex;

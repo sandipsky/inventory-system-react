@@ -8,6 +8,7 @@ import type {
 import NepaliDate from './lib/nepali-date-converter';
 import { dateConfigMap } from './lib/date-config';
 import { format as formatBs, formatObj, parse as parseDateString } from './lib/nepali-date-helper';
+import '../form.css';
 import './date-input.css';
 
 export type CalendarSystem = 'ad' | 'bs';

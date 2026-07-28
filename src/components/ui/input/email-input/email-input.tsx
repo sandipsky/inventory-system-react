@@ -1,4 +1,5 @@
 import { useId, type ComponentPropsWithRef, type KeyboardEvent } from 'react';
+import '../form.css';
 
 export interface LUIEmailInputProps extends Omit<ComponentPropsWithRef<'input'>, 'size' | 'type'> {
   /** Label rendered above the field, linked to the input. */

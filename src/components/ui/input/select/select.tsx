@@ -10,6 +10,7 @@ import {
   type MouseEvent,
   type UIEvent,
 } from 'react';
+import '../form.css';
 import './select.css';
 
 /** A single option after normalization, carrying its flat position in the visible list. */

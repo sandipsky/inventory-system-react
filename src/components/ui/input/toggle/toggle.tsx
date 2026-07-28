@@ -1,4 +1,5 @@
 import type { ComponentPropsWithRef } from 'react';
+import '../form.css';
 import './toggle.css';
 
 export interface LUIToggleProps

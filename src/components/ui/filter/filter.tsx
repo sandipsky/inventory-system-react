@@ -150,9 +150,9 @@ export function LUIFilter({ filterColumns = [], searchBy = '', onFilterChange }:
     <div className="l-filter-host">
       <div className="filter-section">
         {searchBy !== '' && (
-          <div className="input-wrapper">
+          <div className="filter-search">
             <svg
-              className="left-icon"
+              className="filter-search__icon"
               width="18"
               height="18"
               viewBox="0 0 20 20"
@@ -164,7 +164,7 @@ export function LUIFilter({ filterColumns = [], searchBy = '', onFilterChange }:
               <path d="M13.5 13.5 17 17" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
             </svg>
             <input
-              className="form-control"
+              className="filter-search__input"
               type="text"
               placeholder="Search"
               value={searchText}
@@ -214,7 +214,7 @@ export function LUIFilter({ filterColumns = [], searchBy = '', onFilterChange }:
 
             <div className="filter-body">
               {filterColumns.map((filter, index) => (
-                <div className="form-group" key={index}>
+                <div className="filter-field" key={index}>
                   <label>{filter.name}</label>
 
                   {filter.type === 'text' && (

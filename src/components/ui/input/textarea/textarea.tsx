@@ -1,4 +1,5 @@
 import { useId, type ComponentPropsWithRef, type KeyboardEvent } from 'react';
+import '../form.css';
 import './textarea.css';
 
 export interface LUITextareaProps extends ComponentPropsWithRef<'textarea'> {

@@ -1,4 +1,5 @@
 import type { ComponentPropsWithRef } from 'react';
+import '../form.css';
 import './checkbox.css';
 
 export interface LUICheckboxProps

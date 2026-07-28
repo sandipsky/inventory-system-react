@@ -1,4 +1,4 @@
-import { LUIButton, LUIFilter, LUIFlex } from "@/components"
+import { LUIButton, LUIFilter, LUIFlex, LUITable } from "@/components"
 
 const CategoryPage = () => {
   return (
@@ -10,7 +10,7 @@ const CategoryPage = () => {
       </LUIFlex>
 
       <div className="section">
-
+        {/* <LUITable columns={}></LUITable> */}
       </div>
     </>
   )

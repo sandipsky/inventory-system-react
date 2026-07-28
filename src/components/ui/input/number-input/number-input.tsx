@@ -5,6 +5,7 @@ import {
   type FocusEvent,
   type KeyboardEvent,
 } from 'react';
+import '../form.css';
 import './number-input.css';
 
 const NAV_KEYS = new Set([

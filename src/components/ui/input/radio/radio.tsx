@@ -1,4 +1,5 @@
 import { useId, type ComponentPropsWithRef } from 'react';
+import '../form.css';
 import './radio.css';
 
 /** A single selectable option in a radio group. */
