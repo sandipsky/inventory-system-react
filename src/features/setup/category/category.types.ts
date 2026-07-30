@@ -1,7 +1,6 @@
 export interface ICategory {
     id: number;
     name: string;
-    description?: string | null;
     isActive: boolean;
 }
 
@@ -14,12 +13,10 @@ export interface ICategoryBody {
 export interface ICategoryParams {
     pageIndex: number;
     pageSize: number;
+    /** Spring sort param, e.g. `name,asc`. */
+    sort?: string;
     /** Free-text search / column filters forwarded from the filter bar. */
     name?: string;
     isActive?: string;
 }
 
-export interface IPaginatedResponse<T> {
-    items: T[];
-    totalCount: number;
-}

@@ -1,7 +1,8 @@
 import { apiClient } from '@/lib'
-import type { ICategory, ICategoryBody, ICategoryParams, IPaginatedResponse } from './category.types'
+import type { ICategory, ICategoryBody, ICategoryParams } from './category.types'
+import type { IPaginatedResponse } from '@/types/apiResponse.types';
 
-const BASE_API = '/category';
+const BASE_API = '/master/categorys';
 
 export const getCategories = async (params: ICategoryParams) => {
   const res = await apiClient.get<IPaginatedResponse<ICategory>>(`${BASE_API}`, { params })
