@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { LUITooltip } from '../../ui/tooltip/tooltip';
 import './sidebar-item.css';
+import { LUIIcon } from '@/components/ui/icon/icon';
 
 export interface SidebarItemProps {
   icon?: ReactNode;
@@ -34,7 +35,7 @@ export function SidebarItem({
       onClick={onClick}
       aria-expanded={isGroup ? expanded : undefined}
     >
-      {icon != null && <span className="item-icon">{icon}</span>}
+      {icon != null && <LUIIcon name={icon as string} />}
       <span className="item-label">{label}</span>
       {isGroup && (
         <svg
