@@ -7,6 +7,7 @@ import {
   LUIConfirmDialog,
   LUIFilter,
   LUIFlex,
+  LUIIcon,
   LUIPagination,
   LUITable,
   LUITableCell,
@@ -14,6 +15,7 @@ import {
   useLUIModal,
   useLUINotification,
   type FilterChange,
+  type FilterColumn,
   type PageEvent,
   type TableColumn,
   type TableSort,
@@ -29,10 +31,14 @@ const columns: TableColumn[] = [
   { key: 'actions', header: 'Actions', width: '110px', align: 'center' },
 ]
 
-const statusOptions = [
-  { id: '1', name: 'Active' },
-  { id: '0', name: 'Inactive' },
-]
+const filterColumns: FilterColumn[] = [
+  {
+    name: 'Status', formcontrolName: 'isActive', type: 'select', data: [
+      { id: '1', name: 'Active' },
+      { id: '0', name: 'Inactive' },
+    ]
+  }
+];
 
 const getErrorMessage = (error: unknown) =>
   isAxiosError(error)
@@ -115,9 +121,7 @@ const CategoryPage = () => {
       <LUIFlex justify="space-between" align="center">
         <LUIFilter
           searchBy="name"
-          filterColumns={[
-            { name: 'Status', formcontrolName: 'isActive', type: 'select', data: statusOptions },
-          ]}
+          filterColumns={filterColumns}
           onFilterChange={onFilterChange}
         />
 
@@ -157,14 +161,7 @@ const CategoryPage = () => {
                   aria-label={`Edit ${row.name}`}
                   onClick={() => openForm(row)}
                 >
-                  <svg width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M13.6 3.2a1.9 1.9 0 0 1 2.7 2.7l-8.8 8.8-3.6.9.9-3.6 8.8-8.8Z"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                  <LUIIcon name='edit' size={16} />
                 </LUIButton>
 
                 <LUIButton
@@ -174,15 +171,7 @@ const CategoryPage = () => {
                   aria-label={`Delete ${row.name}`}
                   onClick={() => confirmDelete(row)}
                 >
-                  <svg width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M3.5 5.5h13M8 5.5V4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1.5m2.5 0-.7 10a1.5 1.5 0 0 1-1.5 1.4H6.7a1.5 1.5 0 0 1-1.5-1.4l-.7-10M8.2 9v5m3.6-5v5"
-                      stroke="currentColor"
-                      strokeWidth="1.4"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                  <LUIIcon name='trash' size={16} />
                 </LUIButton>
               </LUIFlex>
             )}

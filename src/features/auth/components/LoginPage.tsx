@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
-import { LUIButton, LUITextInput, LUIPasswordInput, useLUINotification } from '@/components';
+import { LUIButton, LUIPasswordInput, useLUINotification, LUIUsernameInput } from '@/components';
 import { useLogin } from '../auth.query';
 import { useAuthStore } from '../auth.store';
 import './loginpage.css';
@@ -46,9 +46,9 @@ export const LoginPage = () => {
           <p className="login-subtitle">Sign in to your account to continue</p>
         </div>
 
-        <LUITextInput
+        <LUIUsernameInput
           label="Username"
-          placeholder="you@company.com"
+          placeholder="Enter your username"
           autoComplete="username"
           required
           value={username}

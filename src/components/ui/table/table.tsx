@@ -215,7 +215,7 @@ export function LUITable({
                   onClick={() => toggleSort(col)}
                   onKeyDown={(event) => onHeaderKeydown(event, col)}
                 >
-                  {col.header}
+                  <span className="th-label">{col.header}</span>
                 </th>
               ))}
             </tr>

@@ -1,0 +1,13 @@
+.lui-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  vertical-align: middle;
+  /* Default tint — the gray the source svgs were drawn with (#646663). */
+  color: var(--text-tertiary);
+}
+
+.lui-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

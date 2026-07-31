@@ -42,6 +42,7 @@ export * from './ui/tabs/tabs';
 export * from './ui/tooltip/tooltip';
 export * from './ui/tree/tree';
 export * from './ui/tree/tree-item';
+export * from './ui/icon/icon';
 
 /* Inputs */
 export * from './ui/input/checkbox/checkbox';
@@ -55,3 +56,4 @@ export * from './ui/input/select/select';
 export * from './ui/input/text-input/text-input';
 export * from './ui/input/textarea/textarea';
 export * from './ui/input/toggle/toggle';
+export * from './ui/input/username-input/username-input';
