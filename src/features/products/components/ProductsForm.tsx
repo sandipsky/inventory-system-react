@@ -10,55 +10,55 @@ import {
   LUIToggle,
   useLUINotification,
 } from '@/components'
-import { useCreateCategory, useUpdateCategory } from '../category.query'
-import type { ICategory } from '../category.types'
+import { useCreateProducts, useUpdateProducts } from '../products.query'
+import type { IProducts } from '../products.types'
 
-const categorySchema = z.object({
-  name: z.string().min(1, 'Category name is required'),
+const productSchema = z.object({
+  name: z.string().min(1, 'Products name is required'),
   is_active: z.boolean(),
 })
 
-type CategoryFormValues = z.infer<typeof categorySchema>
+type ProductsFormValues = z.infer<typeof productSchema>
 
 const getErrorMessage = (error: unknown) =>
   isAxiosError(error)
     ? ((error.response?.data as { message?: string } | undefined)?.message ?? error.message)
     : 'Something went wrong'
 
-export interface CategoryFormProps {
+export interface ProductsFormProps {
   drawerRef: DrawerRef<boolean>
-  category?: ICategory
+  product?: IProducts
 }
 
-const CategoryForm = ({ drawerRef, category }: CategoryFormProps) => {
+const ProductsForm = ({ drawerRef, product }: ProductsFormProps) => {
   const notify = useLUINotification()
-  const createCategory = useCreateCategory()
-  const updateCategory = useUpdateCategory()
+  const createProducts = useCreateProducts()
+  const updateProducts = useUpdateProducts()
 
-  const isEdit = !!category
-  const saving = createCategory.isPending || updateCategory.isPending
+  const isEdit = !!product
+  const saving = createProducts.isPending || updateProducts.isPending
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CategoryFormValues>({
-    resolver: zodResolver(categorySchema),
+  } = useForm<ProductsFormValues>({
+    resolver: zodResolver(productSchema),
     mode: 'onTouched',
     defaultValues: {
-      name: category?.name ?? '',
-      is_active: category?.is_active ?? true,
+      name: product?.name ?? '',
+      is_active: product?.is_active ?? true,
     },
   })
 
-  const onSubmit = async (values: CategoryFormValues) => {
+  const onSubmit = async (values: ProductsFormValues) => {
     try {
       if (isEdit) {
-        await updateCategory.mutateAsync({ id: category.id, body: values })
-        notify.success('Category Updated', `"${values.name}" has been updated.`)
+        await updateProducts.mutateAsync({ id: product.id, body: values })
+        notify.success('Products Updated', `"${values.name}" has been updated.`)
       } else {
-        await createCategory.mutateAsync(values)
-        notify.success('Category Created', `"${values.name}" has been added.`)
+        await createProducts.mutateAsync(values)
+        notify.success('Products Created', `"${values.name}" has been added.`)
       }
       drawerRef.close(true)
     } catch (error) {
@@ -70,7 +70,7 @@ const CategoryForm = ({ drawerRef, category }: CategoryFormProps) => {
     <form noValidate onSubmit={handleSubmit(onSubmit)} style={{ height: '100%' }}>
       <LUIFlex vertical gap="middle" style={{ height: '100%', padding: '20px' }}>
         <LUIFlex justify="space-between" align="center">
-          <h2>{isEdit ? 'Edit Category' : 'Add Category'}</h2>
+          <h2>{isEdit ? 'Edit Products' : 'Add Products'}</h2>
           <LUIButton
             variant="outlined"
             rounded
@@ -85,7 +85,7 @@ const CategoryForm = ({ drawerRef, category }: CategoryFormProps) => {
 
         <LUITextInput
           label="Name"
-          placeholder="Category name"
+          placeholder="Products name"
           error={errors.name?.message}
           required
           {...register('name')}
@@ -106,4 +106,4 @@ const CategoryForm = ({ drawerRef, category }: CategoryFormProps) => {
   )
 }
 
-export default CategoryForm
+export default ProductsForm

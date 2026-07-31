@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { isAxiosError } from 'axios'
+import { useMemo, useState, type ReactNode } from 'react'
 import {
   LUIButton,
   LUICard,
@@ -20,50 +19,82 @@ import {
   type TableColumn,
   type TableSort,
 } from '@/components'
-import { useCategories, useDeleteProducts } from '../products.query'
-import type { IProducts } from '../products.types'
-import ProductsForm from './ProductsForm'
+import { createMasterApi, getErrorMessage } from '../master.api'
+import { createMasterQueries } from '../master.query'
+import type { IMasterEntity } from '../master.types'
+import MasterForm from './MasterForm'
 
-const columns: TableColumn[] = [
+const DEFAULT_COLUMNS: TableColumn[] = [
   { key: 'sn', header: 'S.N.', width: '70px' },
   { key: 'name', header: 'Name', sortable: true },
-  { key: 'isActive', header: 'Status', width: '120px', align: 'center' },
+  { key: 'is_active', header: 'Status', width: '120px', align: 'center' },
   { key: 'actions', header: 'Actions', width: '110px', align: 'center' },
 ]
 
-const filterColumns: FilterColumn[] = [
-  {
-    name: 'Status', formcontrolName: 'isActive', type: 'select', data: [
-      { id: '1', name: 'Active' },
-      { id: '0', name: 'Inactive' },
-    ]
-  }
-];
+const STATUS_FILTER: FilterColumn = {
+  name: 'Status',
+  formcontrolName: 'is_active',
+  type: 'select',
+  data: [
+    { id: '1', name: 'Active' },
+    { id: '0', name: 'Inactive' },
+  ],
+}
 
-const getErrorMessage = (error: unknown) =>
-  isAxiosError(error)
-    ? ((error.response?.data as { message?: string } | undefined)?.message ?? error.message)
-    : 'Something went wrong'
+const TAX_RATE_FILTER: FilterColumn = {
+  name: 'Tax Rate',
+  formcontrolName: 'tax_rate',
+  type: 'text',
+}
 
-const ProductsPage = () => {
+export interface MasterListPageProps {
+  /** Singular label, e.g. "Category" — drives the add button, dialogs and toasts. */
+  title: string
+  /** REST base path of the resource, e.g. '/master/categorys' (also the query cache key). */
+  endpoint: string
+  columns?: TableColumn[]
+  /** Adds the tax-rate form field, filter and validation — for the tax type master. */
+  withTaxRate?: boolean
+  /** Extra `LUITableCell` renderers for feature-specific columns (may also override defaults). */
+  children?: ReactNode
+}
+
+/**
+ * Complete setup-master page: search + filters, server-sorted and paginated
+ * table, add/edit form in a drawer, delete behind a confirm dialog.
+ *
+ * ```tsx
+ * <MasterListPage title="Category" endpoint="/master/categorys" />
+ * ```
+ */
+export default function MasterListPage({
+  title,
+  endpoint,
+  columns = DEFAULT_COLUMNS,
+  withTaxRate = false,
+  children,
+}: MasterListPageProps) {
   const drawer = useLUIDrawer()
   const modal = useLUIModal()
   const notify = useLUINotification()
+
+  const queries = useMemo(() => createMasterQueries(endpoint, createMasterApi(endpoint)), [endpoint])
+  const filterColumns = withTaxRate ? [STATUS_FILTER, TAX_RATE_FILTER] : [STATUS_FILTER]
 
   const [pageIndex, setPageIndex] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [sort, setSort] = useState<TableSort | null>(null)
   const [filters, setFilters] = useState<Record<string, string>>({})
 
-  const { data, isFetching } = useCategories({
+  const { data, isFetching } = queries.useList({
     pageIndex,
     pageSize,
     ...(sort && { sort: `${sort.key}:${sort.direction}` }),
     ...filters,
   })
-  const deleteProducts = useDeleteProducts()
+  const deleteEntity = queries.useDelete()
 
-  const categories = data?.content ?? []
+  const rows = data?.content ?? []
   const totalCount = data?.totalElements ?? 0
 
   const onFilterChange = (changes: FilterChange[]) => {
@@ -85,23 +116,32 @@ const ProductsPage = () => {
     setPageIndex(0)
   }
 
-  const openForm = (product?: IProducts) => {
-    drawer.open<boolean>((ref) => <ProductsForm drawerRef={ref} product={product} />, {
-      size: '420px',
-    })
+  const openForm = (entity?: IMasterEntity) => {
+    drawer.open<boolean>(
+      (ref) => (
+        <MasterForm
+          drawerRef={ref}
+          title={title}
+          queries={queries}
+          entity={entity}
+          withTaxRate={withTaxRate}
+        />
+      ),
+      { size: '420px' },
+    )
   }
 
-  const confirmDelete = (product: IProducts) => {
+  const confirmDelete = (entity: IMasterEntity) => {
     const ref = modal.open<boolean>(
       (modalRef) => (
         <LUIConfirmDialog
           modalRef={modalRef}
           data={{
-            title: 'Delete Products',
-            message: `Are you sure you want to delete "${product.name}"? This cannot be undone.`,
+            title: `Delete ${title}`,
+            message: `Are you sure you want to delete "${entity.name}"? This cannot be undone.`,
             confirmText: 'Delete',
             onConfirm: () =>
-              deleteProducts.mutateAsync(product.id).catch((error) => {
+              deleteEntity.mutateAsync(entity.id).catch((error) => {
                 notify.error('Delete Failed', getErrorMessage(error))
                 throw error
               }),
@@ -112,38 +152,34 @@ const ProductsPage = () => {
     )
 
     void ref.afterClosed().then((confirmed) => {
-      if (confirmed) notify.success('Products Deleted', `"${product.name}" has been removed.`)
+      if (confirmed) notify.success(`${title} Deleted`, `"${entity.name}" has been removed.`)
     })
   }
 
   return (
     <>
       <LUIFlex justify="space-between" align="center">
-        <LUIFilter
-          searchBy="name"
-          filterColumns={filterColumns}
-          onFilterChange={onFilterChange}
-        />
+        <LUIFilter searchBy="name" filterColumns={filterColumns} onFilterChange={onFilterChange} />
 
-        <LUIButton onClick={() => openForm()}>Add Products</LUIButton>
+        <LUIButton onClick={() => openForm()}>Add {title}</LUIButton>
       </LUIFlex>
 
       <LUICard className="table-card">
         <LUITable
           columns={columns}
-          data={categories}
+          data={rows}
           rowKey="id"
           serverSort
           sort={sort}
           onSortChange={onSortChange}
           loading={isFetching}
-          emptyText="No categories found"
+          emptyText={`No ${title.toLowerCase()} records found`}
         >
-          <LUITableCell<IProducts> column="sn">
+          <LUITableCell<IMasterEntity> column="sn">
             {({ index }) => pageIndex * pageSize + index + 1}
           </LUITableCell>
 
-          <LUITableCell<IProducts> column="isActive">
+          <LUITableCell<IMasterEntity> column="is_active">
             {({ row }) => (
               <LUIChip variant={row.is_active ? 'success' : 'error'} dot>
                 {row.is_active ? 'Active' : 'Inactive'}
@@ -151,7 +187,7 @@ const ProductsPage = () => {
             )}
           </LUITableCell>
 
-          <LUITableCell<IProducts> column="actions">
+          <LUITableCell<IMasterEntity> column="actions">
             {({ row }) => (
               <LUIFlex justify="center" gap="small">
                 <LUIButton
@@ -161,7 +197,7 @@ const ProductsPage = () => {
                   aria-label={`Edit ${row.name}`}
                   onClick={() => openForm(row)}
                 >
-                  <LUIIcon name='edit' size={16} />
+                  <LUIIcon name="edit" size={16} />
                 </LUIButton>
 
                 <LUIButton
@@ -171,11 +207,13 @@ const ProductsPage = () => {
                   aria-label={`Delete ${row.name}`}
                   onClick={() => confirmDelete(row)}
                 >
-                  <LUIIcon name='trash' size={16} />
+                  <LUIIcon name="trash" size={16} />
                 </LUIButton>
               </LUIFlex>
             )}
           </LUITableCell>
+
+          {children}
         </LUITable>
 
         <LUIPagination
@@ -188,5 +226,3 @@ const ProductsPage = () => {
     </>
   )
 }
-
-export default ProductsPage

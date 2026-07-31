@@ -1,7 +1,5 @@
-const PackingPage = () => {
-  return (
-    <div>PackingPage</div>
-  )
-}
+import { MasterListPage } from '../../shared'
+
+const PackingPage = () => <MasterListPage title="Packing" endpoint="/master/packings" />
 
 export default PackingPage

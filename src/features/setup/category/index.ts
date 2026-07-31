@@ -1,5 +1,1 @@
-export * from './category.api'
-export * from './category.query'
-export * from './category.types'
 export { default as CategoryPage } from './components/CategoryPage'
-export { default as CategoryForm } from './components/CategoryForm'
