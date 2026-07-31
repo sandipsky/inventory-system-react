@@ -25,6 +25,10 @@
   font-weight: 600;
 }
 
+.sidebar-item.active .lui-icon {
+  color: var(--text-white);
+}
+
 .sidebar-item .item-icon {
   display: inline-flex;
   justify-content: center;

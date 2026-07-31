@@ -6,7 +6,6 @@ import {
   DrawerRef,
   LUIButton,
   LUIFlex,
-  LUITextarea,
   LUITextInput,
   LUIToggle,
   useLUINotification,
@@ -16,8 +15,7 @@ import type { ICategory } from '../category.types'
 
 const categorySchema = z.object({
   name: z.string().min(1, 'Category name is required'),
-  description: z.string().optional(),
-  isActive: z.boolean(),
+  is_active: z.boolean(),
 })
 
 type CategoryFormValues = z.infer<typeof categorySchema>
@@ -29,7 +27,6 @@ const getErrorMessage = (error: unknown) =>
 
 export interface CategoryFormProps {
   drawerRef: DrawerRef<boolean>
-  /** Category being edited; omit to create a new one. */
   category?: ICategory
 }
 
@@ -47,10 +44,10 @@ const CategoryForm = ({ drawerRef, category }: CategoryFormProps) => {
     formState: { errors },
   } = useForm<CategoryFormValues>({
     resolver: zodResolver(categorySchema),
+    mode: 'onTouched',
     defaultValues: {
       name: category?.name ?? '',
-      description: category?.description ?? '',
-      isActive: category?.isActive ?? true,
+      is_active: category?.is_active ?? true,
     },
   })
 
@@ -70,7 +67,7 @@ const CategoryForm = ({ drawerRef, category }: CategoryFormProps) => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} style={{ height: '100%' }}>
+    <form noValidate onSubmit={handleSubmit(onSubmit)} style={{ height: '100%' }}>
       <LUIFlex vertical gap="middle" style={{ height: '100%', padding: '20px' }}>
         <LUIFlex justify="space-between" align="center">
           <h2>{isEdit ? 'Edit Category' : 'Add Category'}</h2>
@@ -89,19 +86,12 @@ const CategoryForm = ({ drawerRef, category }: CategoryFormProps) => {
         <LUITextInput
           label="Name"
           placeholder="Category name"
-          required
           error={errors.name?.message}
+          required
           {...register('name')}
         />
 
-        <LUITextarea
-          label="Description"
-          placeholder="Short description (optional)"
-          error={errors.description?.message}
-          {...register('description')}
-        />
-
-        <LUIToggle label="Active" {...register('isActive')} />
+        <LUIToggle label="Active" {...register('is_active')} />
 
         <LUIFlex justify="end" gap="small" style={{ marginTop: 'auto' }}>
           <LUIButton variant="outlined" disabled={saving} onClick={() => drawerRef.close()}>

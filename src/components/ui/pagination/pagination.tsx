@@ -178,7 +178,7 @@ export function LUIPagination({
         <LUIMenu
           mode="right"
           dropdownDisplay={
-            <div dropdown-display="" className="paginator-btn paginator-dropdown-btn">
+            <div className="paginator-btn paginator-dropdown-btn">
               {pageSize}
               <svg fill="currentColor" width="20" height="20" viewBox="0 0 24 24">
                 <path d={NEXT_ICON_PATH} />
@@ -189,8 +189,9 @@ export function LUIPagination({
           {pageSizeOptions.map((item) => (
             <div
               key={item}
-              dropdown-item=""
-              className={item === pageSize ? 'active' : ''}
+              className={['dropdown-item', item === pageSize ? 'active' : '']
+                .filter(Boolean)
+                .join(' ')}
               onClick={() => onChangePageOption(item)}
             >
               {item}

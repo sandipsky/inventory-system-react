@@ -5,10 +5,10 @@ import { RouterProvider } from "@tanstack/react-router"
 
 export const AppProviders = () => {
     return (
-        <LUIProvider>
-            <QueryClientProvider client={queryClient}>
+        <QueryClientProvider client={queryClient}>
+            <LUIProvider>
                 <RouterProvider router={router} />
-            </QueryClientProvider>
-        </LUIProvider>
+            </LUIProvider>
+        </QueryClientProvider>
     )
 }

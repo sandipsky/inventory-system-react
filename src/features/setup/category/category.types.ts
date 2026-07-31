@@ -1,12 +1,12 @@
 export interface ICategory {
     id: number;
     name: string;
-    isActive: boolean;
+    is_active: boolean;
 }
 
 export interface ICategoryBody {
     name: string;
-    isActive: boolean;
+    is_active: boolean;
 }
 
 export interface ICategoryParams {
@@ -14,6 +14,6 @@ export interface ICategoryParams {
     pageSize: number;
     sort?: string;
     name?: string;
-    isActive?: string;
+    is_active?: string;
 }
 

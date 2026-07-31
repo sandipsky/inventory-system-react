@@ -128,7 +128,7 @@ const CategoryPage = () => {
         <LUIButton onClick={() => openForm()}>Add Category</LUIButton>
       </LUIFlex>
 
-      <LUICard>
+      <LUICard className="table-card">
         <LUITable
           columns={columns}
           data={categories}
@@ -145,8 +145,8 @@ const CategoryPage = () => {
 
           <LUITableCell<ICategory> column="isActive">
             {({ row }) => (
-              <LUIChip variant={row.isActive ? 'success' : 'error'} dot>
-                {row.isActive ? 'Active' : 'Inactive'}
+              <LUIChip variant={row.is_active ? 'success' : 'error'} dot>
+                {row.is_active ? 'Active' : 'Inactive'}
               </LUIChip>
             )}
           </LUITableCell>

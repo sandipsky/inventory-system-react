@@ -17,6 +17,12 @@
   rotate: 90deg;
 }
 
+/* The menu panel's global 160px min-width dwarfs the numeric options; let the
+   page-size dropdown shrink-wrap to its widest item (e.g. "100") instead. */
+.page-items .dropdown-content {
+  min-width: 0;
+}
+
 .page-items {
   display: flex;
   align-items: center;
