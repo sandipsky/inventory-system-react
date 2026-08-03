@@ -55,9 +55,12 @@
 /* slideUp — rises from below on enter, drops on leave */
 .modal-anim-slideUp.modal-anim--enter { animation-name: modal-slideUp-in; }
 .modal-anim-slideUp.modal-anim--leave { animation-name: modal-slideUp-out; }
+/* The -in keyframes end at `transform: none` so the settled panel has no transform —
+   a retained transform would become the containing block for position:fixed
+   descendants (select dropdowns, tooltips) and shift them. */
 @keyframes modal-slideUp-in {
   from { opacity: 0; transform: translateY(40px); }
-  to   { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 @keyframes modal-slideUp-out {
   from { opacity: 1; transform: translateY(0); }
@@ -69,7 +72,7 @@
 .modal-anim-slideDown.modal-anim--leave { animation-name: modal-slideDown-out; }
 @keyframes modal-slideDown-in {
   from { opacity: 0; transform: translateY(-40px); }
-  to   { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 @keyframes modal-slideDown-out {
   from { opacity: 1; transform: translateY(0); }
@@ -81,7 +84,7 @@
 .modal-anim-slideLeft.modal-anim--leave { animation-name: modal-slideLeft-out; }
 @keyframes modal-slideLeft-in {
   from { opacity: 0; transform: translateX(60px); }
-  to   { opacity: 1; transform: translateX(0); }
+  to   { opacity: 1; transform: none; }
 }
 @keyframes modal-slideLeft-out {
   from { opacity: 1; transform: translateX(0); }
@@ -93,7 +96,7 @@
 .modal-anim-slideRight.modal-anim--leave { animation-name: modal-slideRight-out; }
 @keyframes modal-slideRight-in {
   from { opacity: 0; transform: translateX(-60px); }
-  to   { opacity: 1; transform: translateX(0); }
+  to   { opacity: 1; transform: none; }
 }
 @keyframes modal-slideRight-out {
   from { opacity: 1; transform: translateX(0); }
@@ -117,7 +120,7 @@
 .modal-anim-zoom.modal-anim--leave { animation-name: modal-zoom-out; }
 @keyframes modal-zoom-in {
   from { opacity: 0; transform: scale(0.85); }
-  to   { opacity: 1; transform: scale(1); }
+  to   { opacity: 1; transform: none; }
 }
 @keyframes modal-zoom-out {
   from { opacity: 1; transform: scale(1); }

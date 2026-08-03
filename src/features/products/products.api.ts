@@ -4,7 +4,7 @@ import type { IPaginatedResponse } from '@/types/apiResponse.types';
 
 const BASE_API = '/master/products';
 
-export const getCategories = async (params: IProductsParams) => {
+export const getProducts = async (params: IProductsParams) => {
   const res = await apiClient.get<IPaginatedResponse<IProducts>>(`${BASE_API}`, { params })
   return res.data
 }

@@ -10,6 +10,7 @@ import {
   type MouseEvent,
   type UIEvent,
 } from 'react';
+import { createPortal } from 'react-dom';
 import '../form.css';
 import './select.css';
 
@@ -145,6 +146,7 @@ export function LUISelect({
   const [maxListHeight, setMaxListHeight] = useState(VIEWPORT_HEIGHT);
 
   const hostRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -442,9 +444,13 @@ export function LUISelect({
     }
   };
 
+  /** True when the node lives in the trigger host or the body-portaled dropdown. */
+  const isInside = (node: Node | null) =>
+    !!node && (!!hostRef.current?.contains(node) || !!dropdownRef.current?.contains(node));
+
   const handleFocusOut = (event: FocusEvent) => {
     // Only a focus leaving the whole component counts as a blur for touched-state.
-    if (hostRef.current && !hostRef.current.contains(event.relatedTarget as Node)) {
+    if (!isInside(event.relatedTarget as Node)) {
       onBlur?.();
     }
   };
@@ -453,7 +459,7 @@ export function LUISelect({
   useEffect(() => {
     if (!open) return;
     const onDocumentPointerDown = (event: PointerEvent) => {
-      if (hostRef.current && !hostRef.current.contains(event.target as Node)) {
+      if (!isInside(event.target as Node)) {
         close();
       }
     };
@@ -686,8 +692,11 @@ export function LUISelect({
           </div>
         )}
 
-        {open && (
+        {/* Portaled to <body> so an ancestor transform/filter (e.g. a drawer's or
+            modal's settled animation) can never re-anchor the fixed-position menu. */}
+        {open && createPortal(
           <div
+            ref={dropdownRef}
             className={['l-select__dropdown', dropUp ? 'is-up' : ''].filter(Boolean).join(' ')}
             style={{
               left: menuLeft,
@@ -761,7 +770,8 @@ export function LUISelect({
                 {visible.map(renderOption)}
               </div>
             )}
-          </div>
+          </div>,
+          document.body,
         )}
       </div>
     </div>

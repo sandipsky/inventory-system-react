@@ -20,25 +20,41 @@ import {
   type TableColumn,
   type TableSort,
 } from '@/components'
-import { useCategories, useDeleteProducts } from '../products.query'
+import { useDropdown } from '@/services/dropdown.service'
+import { useProductsList, useDeleteProducts } from '../products.query'
 import type { IProducts } from '../products.types'
 import ProductsForm from './ProductsForm'
 
 const columns: TableColumn[] = [
   { key: 'sn', header: 'S.N.', width: '70px' },
-  { key: 'name', header: 'Name', sortable: true },
+  { key: 'name', header: 'Product Name', sortable: true },
+  { key: 'code', header: 'Code', sortable: true },
+  { key: 'category_name', header: 'Category', sortable: true },
+  { key: 'product_types', header: 'Type' },
+  { key: 'unit_name', header: 'Unit', sortable: true },
+  { key: 'packing_name', header: 'Packing', sortable: true },
+  { key: 'tax_type_name', header: 'Tax Type', sortable: true },
   { key: 'isActive', header: 'Status', width: '120px', align: 'center' },
   { key: 'actions', header: 'Actions', width: '110px', align: 'center' },
 ]
 
-const filterColumns: FilterColumn[] = [
-  {
-    name: 'Status', formcontrolName: 'isActive', type: 'select', data: [
-      { id: '1', name: 'Active' },
-      { id: '0', name: 'Inactive' },
-    ]
-  }
-];
+/* Server-side sort paths for columns whose row key differs from the API's sort field. */
+const SORT_FIELDS: Record<string, string> = {
+  category_name: 'category.name',
+  unit_name: 'unit.name',
+  packing_name: 'packing.name',
+  tax_type_name: 'taxType.name',
+}
+
+const TYPE_OPTIONS = [
+  { id: 'purchasable', name: 'Purchasable' },
+  { id: 'sellable', name: 'Sellable' },
+]
+
+const STATUS_OPTIONS = [
+  { id: '1', name: 'Active' },
+  { id: '0', name: 'Inactive' },
+]
 
 const getErrorMessage = (error: unknown) =>
   isAxiosError(error)
@@ -55,15 +71,30 @@ const ProductsPage = () => {
   const [sort, setSort] = useState<TableSort | null>(null)
   const [filters, setFilters] = useState<Record<string, string>>({})
 
-  const { data, isFetching } = useCategories({
+  const { data: categories } = useDropdown('categorys')
+  const { data: taxTypes } = useDropdown('taxtypes')
+  const { data: packings } = useDropdown('packings')
+  const { data: units } = useDropdown('units')
+
+  const filterColumns: FilterColumn[] = [
+    { name: 'Product Code', formcontrolName: 'code', type: 'text' },
+    { name: 'Product Category', formcontrolName: 'category.id', type: 'select', data: categories ?? [] },
+    { name: 'Unit', formcontrolName: 'unit.id', type: 'select', data: units ?? [] },
+    { name: 'Packing', formcontrolName: 'packing.id', type: 'select', data: packings ?? [] },
+    { name: 'Tax Type', formcontrolName: 'taxType.id', type: 'select', data: taxTypes ?? [] },
+    { name: 'Type', formcontrolName: 'productType', type: 'select', data: TYPE_OPTIONS },
+    { name: 'Status', formcontrolName: 'isActive', type: 'select', data: STATUS_OPTIONS },
+  ]
+
+  const { data, isFetching } = useProductsList({
     pageIndex,
     pageSize,
-    ...(sort && { sort: `${sort.key}:${sort.direction}` }),
+    ...(sort && { sort: `${SORT_FIELDS[sort.key] ?? sort.key}:${sort.direction}` }),
     ...filters,
   })
   const deleteProducts = useDeleteProducts()
 
-  const categories = data?.content ?? []
+  const products = data?.content ?? []
   const totalCount = data?.totalElements ?? 0
 
   const onFilterChange = (changes: FilterChange[]) => {
@@ -87,7 +118,8 @@ const ProductsPage = () => {
 
   const openForm = (product?: IProducts) => {
     drawer.open<boolean>((ref) => <ProductsForm drawerRef={ref} product={product} />, {
-      size: '420px',
+      size: '99vh',
+      position: 'bottom',
     })
   }
 
@@ -131,16 +163,26 @@ const ProductsPage = () => {
       <LUICard className="table-card">
         <LUITable
           columns={columns}
-          data={categories}
+          data={products}
           rowKey="id"
           serverSort
           sort={sort}
           onSortChange={onSortChange}
           loading={isFetching}
-          emptyText="No categories found"
+          emptyText="No products found"
         >
           <LUITableCell<IProducts> column="sn">
             {({ index }) => pageIndex * pageSize + index + 1}
+          </LUITableCell>
+
+          <LUITableCell<IProducts> column="product_types">
+            {({ row }) => (
+              <LUIFlex gap="small">
+                {(row.product_types ?? []).map((type) => (
+                  <LUIChip key={type}>{type}</LUIChip>
+                ))}
+              </LUIFlex>
+            )}
           </LUITableCell>
 
           <LUITableCell<IProducts> column="isActive">

@@ -54,9 +54,12 @@
 /* left: enters by sliding right, leaves by sliding left */
 .drawer-panel--left.drawer-anim--enter { animation-name: drawer-left-in; }
 .drawer-panel--left.drawer-anim--leave { animation-name: drawer-left-out; }
+/* The -in keyframes end at `none` (not translate(0)) so the settled panel has no
+   transform — a retained transform would become the containing block for
+   position:fixed descendants (select dropdowns, tooltips) and shift them. */
 @keyframes drawer-left-in {
   from { transform: translateX(-100%); }
-  to   { transform: translateX(0); }
+  to   { transform: none; }
 }
 @keyframes drawer-left-out {
   from { transform: translateX(0); }
@@ -68,7 +71,7 @@
 .drawer-panel--right.drawer-anim--leave { animation-name: drawer-right-out; }
 @keyframes drawer-right-in {
   from { transform: translateX(100%); }
-  to   { transform: translateX(0); }
+  to   { transform: none; }
 }
 @keyframes drawer-right-out {
   from { transform: translateX(0); }
@@ -80,7 +83,7 @@
 .drawer-panel--bottom.drawer-anim--leave { animation-name: drawer-bottom-out; }
 @keyframes drawer-bottom-in {
   from { transform: translateY(100%); }
-  to   { transform: translateY(0); }
+  to   { transform: none; }
 }
 @keyframes drawer-bottom-out {
   from { transform: translateY(0); }

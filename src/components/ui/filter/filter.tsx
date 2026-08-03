@@ -14,8 +14,12 @@ export interface FilterColumn {
   type: 'text' | 'select';
   /** Initial value for the field control (field state lives inside the component). */
   value?: string | number | null;
-  /** Options for `select` fields (id ↔ value, name ↔ label); may carry extra keys for `groupBy`. */
-  data?: readonly ({ id: string | number; name: string } & Record<string, unknown>)[];
+  /**
+   * Options for `select` fields (id ↔ value, name ↔ label). Extra keys are
+   * allowed (and read by `groupBy`); no index signature so interface types
+   * like `IDropdown` are accepted as-is.
+   */
+  data?: readonly { id: string | number; name: string }[];
   /** Optional `select` grouping key (a property on each option). */
   groupBy?: string;
 }

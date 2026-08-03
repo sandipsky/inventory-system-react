@@ -2,26 +2,26 @@ import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tansta
 import {
   createProducts,
   deleteProducts,
-  getCategories,
+  getProducts,
   getProductsById,
   updateProducts,
 } from './products.api'
 import type { IProductsBody, IProductsParams } from './products.types'
 
 export const productsKeys = {
-  all: ['categories'] as const,
+  all: ['products'] as const,
   list: (params: IProductsParams) => [...productsKeys.all, 'list', params] as const,
   detail: (id: number) => [...productsKeys.all, 'detail', id] as const,
 }
 
-export const useCategories = (params: IProductsParams) =>
+export const useProductsList = (params: IProductsParams) =>
   useQuery({
     queryKey: productsKeys.list(params),
-    queryFn: () => getCategories(params),
+    queryFn: () => getProducts(params),
     placeholderData: keepPreviousData,
   })
 
-export const useProducts = (id: number) =>
+export const useProductsById = (id: number) =>
   useQuery({
     queryKey: productsKeys.detail(id),
     queryFn: () => getProductsById(id),
