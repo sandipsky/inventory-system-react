@@ -35,7 +35,7 @@ const columns: TableColumn[] = [
   { key: 'packing_name', header: 'Packing', sortable: true },
   { key: 'tax_type_name', header: 'Tax Type', sortable: true },
   { key: 'isActive', header: 'Status', width: '120px', align: 'center' },
-  { key: 'actions', header: 'Actions', width: '110px', align: 'center' },
+  { key: 'actions', header: 'Actions', width: '150px', align: 'center' },
 ]
 
 /* Server-side sort paths for columns whose row key differs from the API's sort field. */
@@ -116,8 +116,8 @@ const ProductsPage = () => {
     setPageIndex(0)
   }
 
-  const openForm = (product?: IProducts) => {
-    drawer.open<boolean>((ref) => <ProductsForm drawerRef={ref} product={product} />, {
+  const openForm = (product?: IProducts, view = false) => {
+    drawer.open<boolean>((ref) => <ProductsForm drawerRef={ref} product={product} view={view} />, {
       size: '99vh',
       position: 'bottom',
     })
@@ -196,6 +196,16 @@ const ProductsPage = () => {
           <LUITableCell<IProducts> column="actions">
             {({ row }) => (
               <LUIFlex justify="center" gap="small">
+                <LUIButton
+                  variant="outlined"
+                  size="sm"
+                  rounded
+                  aria-label={`View ${row.name}`}
+                  onClick={() => openForm(row, true)}
+                >
+                  <LUIIcon name='eye' size={16} />
+                </LUIButton>
+
                 <LUIButton
                   variant="outlined"
                   size="sm"

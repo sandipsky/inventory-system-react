@@ -2,7 +2,7 @@ import { apiClient } from '@/lib'
 import type { IProducts, IProductsBody, IProductsParams } from './products.types'
 import type { IPaginatedResponse } from '@/types/apiResponse.types';
 
-const BASE_API = '/master/products';
+const BASE_API = '/products';
 
 export const getProducts = async (params: IProductsParams) => {
   const res = await apiClient.get<IPaginatedResponse<IProducts>>(`${BASE_API}`, { params })
