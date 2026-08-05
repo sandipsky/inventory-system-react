@@ -12,7 +12,7 @@ export const createMasterApi = <T = IMasterEntity, TBody = IMasterBody>(basePath
     const res = await apiClient.post<T>(basePath, body)
     return res.data
   },
-  update: async (id: number, body: TBody) => {
+  update: async ({ id, body }: { id: number; body: TBody }) => {
     const res = await apiClient.put<T>(`${basePath}/${id}`, body)
     return res.data
   },
@@ -26,7 +26,11 @@ export type MasterApi<T = IMasterEntity, TBody = IMasterBody> = ReturnType<
   typeof createMasterApi<T, TBody>
 >
 
-export const getErrorMessage = (error: unknown) =>
-  isAxiosError(error)
-    ? ((error.response?.data as { message?: string } | undefined)?.message ?? error.message)
-    : 'Something went wrong'
+export const getErrorMessage = (error: unknown) => {
+  if (isAxiosError(error)) {
+    return (error.response?.data as { message?: string } | undefined)?.message ?? error.message
+  }
+  /* Anything else never reached the server — surface it instead of swallowing it. */
+  console.error(error)
+  return 'Something went wrong'
+}

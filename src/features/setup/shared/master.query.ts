@@ -27,7 +27,13 @@ export const createMasterQueries = <T = IMasterEntity, TBody = IMasterBody>(
   const useUpdate = () => {
     const queryClient = useQueryClient()
     return useMutation({
-      mutationFn: ({ id, body }: { id: number; body: TBody }) => api.update(id, body),
+      /*
+       * Pass `api.update` directly, never a wrapper arrow: the React Compiler
+       * outlines a closure like `(vars) => api.update(vars)` to module scope,
+       * where `api` is out of scope — the mutation then throws a ReferenceError
+       * before any request is sent.
+       */
+      mutationFn: api.update,
       onSuccess: () => queryClient.invalidateQueries({ queryKey: allKey }),
     })
   }
