@@ -21,7 +21,7 @@ import {
   useLUINotification,
   type TableColumn,
 } from '@/components'
-import { getErrorMessage } from '../../setup/shared'
+import { getErrorMessage } from '../../setup'
 import { useDropdown } from '@/services/dropdown.service'
 import { useCreateProducts, useUpdateProducts } from '../products.query'
 import type { IProducts } from '../products.types'

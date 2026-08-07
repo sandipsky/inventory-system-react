@@ -1,5 +1,5 @@
 import { LUITableCell, type TableColumn } from '@/components'
-import { MasterListPage, type IMasterEntity } from '../../shared'
+import { MasterListPage, type IMasterEntity } from '../..'
 
 const columns: TableColumn[] = [
   { key: 'sn', header: 'S.N.', width: '70px' },

@@ -85,13 +85,17 @@ export default function MasterForm({
   }
 
   return (
-    <form noValidate onSubmit={handleSubmit(onSubmit)} style={{ height: '100%' }}>
-      <LUIFlex vertical gap="middle" style={{ height: '100%', padding: '20px' }}>
-        <LUIFlex justify="space-between" align="center">
-          <h2>{isEdit ? `Edit ${title}` : `Add ${title}`}</h2>
+    <form noValidate onSubmit={handleSubmit(onSubmit)} className="drawer">
+      <LUIFlex vertical className="drawer__layout">
+        <LUIFlex justify="space-between" align="center" className="drawer__header">
+          <div>
+            <h2 className="page-title">{isEdit ? 'Update' : 'Add'} {title}</h2>
+            <p className="sub-title">Provide required information to {isEdit ? 'update' : 'add'} {title}.</p>
+          </div>
           <LUIButton
             variant="outlined"
             rounded
+            size="sm"
             aria-label="Close"
             onClick={() => drawerRef.close()}
           >
@@ -99,36 +103,39 @@ export default function MasterForm({
           </LUIButton>
         </LUIFlex>
 
-        <LUITextInput
-          label="Name"
-          placeholder={`${title} name`}
-          required
-          error={errors.name?.message}
-          {...register('name')}
-        />
+        <LUIFlex vertical gap="large" className="drawer__body">
 
-        {withTaxRate && (
-          <LUINumberInput
-            label="Tax Rate"
-            placeholder="0.00"
-            suffix="%"
-            decimalPlaces={2}
+          <LUITextInput
+            label="Name"
+            placeholder={`${title} name`}
             required
-            error={errors.tax_rate?.message}
-            {...register('tax_rate', {
-              setValueAs: (value) => (value === '' || value == null ? undefined : Number(value)),
-            })}
+            error={errors.name?.message}
+            {...register('name')}
           />
-        )}
 
-        <LUIToggle label="Active" {...register('is_active')} />
+          {withTaxRate && (
+            <LUINumberInput
+              label="Tax Rate"
+              placeholder="0.00"
+              suffix="%"
+              decimalPlaces={2}
+              required
+              error={errors.tax_rate?.message}
+              {...register('tax_rate', {
+                setValueAs: (value) => (value === '' || value == null ? undefined : Number(value)),
+              })}
+            />
+          )}
 
-        <LUIFlex justify="end" gap="small" style={{ marginTop: 'auto' }}>
+          <LUIToggle labelPosition="top" label="Active Status" {...register('is_active')} />
+        </LUIFlex>
+
+        <LUIFlex justify="end" gap="small" className="drawer__footer">
           <LUIButton variant="outlined" disabled={saving} onClick={() => drawerRef.close()}>
             Cancel
           </LUIButton>
           <LUIButton type="submit" variant="primary" disabled={saving}>
-            {saving ? 'Saving…' : isEdit ? 'Update' : 'Save'}
+            {saving ? 'Saving…' : `${isEdit ? 'Update' : 'Add'} ${title}`}
           </LUIButton>
         </LUIFlex>
       </LUIFlex>

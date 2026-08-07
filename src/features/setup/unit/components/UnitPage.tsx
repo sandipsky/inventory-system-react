@@ -1,4 +1,4 @@
-import { MasterListPage } from '../../shared'
+import { MasterListPage } from '../..'
 
 const UnitPage = () => <MasterListPage title="Unit" endpoint="/master/units" />
 
