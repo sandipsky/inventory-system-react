@@ -7,7 +7,11 @@
     border-radius: 12px;
     border: 1px solid var(--separator);
     background: var(--bg-lightest);
+    /* Clips children to the rounded corners, but as a side effect zeroes the
+       flex-item automatic minimum size — min-height restores "size to content"
+       so the card isn't crushed inside height-constrained flex columns. */
     overflow: hidden;
+    min-height: fit-content;
 }
 
 .lui-card.lui-card-dark {

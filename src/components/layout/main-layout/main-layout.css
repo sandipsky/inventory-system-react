@@ -26,7 +26,10 @@
 /* List-page card holding a table + pagination: clamps the card to the space
    left in .page-content and scrolls the table body only — the sticky header
    and the pagination stay in view. Usage: <LUICard className="table-card">. */
-.table-card {
+/* .lui-card qualifier: outranks the base card's `min-height: fit-content`
+   (which is load-order-dependent at equal specificity) so this card is
+   allowed to shrink to the viewport instead of growing with its rows. */
+.lui-card.table-card {
   display: flex;
   flex-direction: column;
   min-height: 0;

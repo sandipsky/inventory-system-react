@@ -10,6 +10,12 @@ export interface LUIUsernameInputProps extends Omit<ComponentPropsWithRef<'input
 
   /** Called when Enter is pressed in the field. */
   onEnter?: (event: KeyboardEvent<HTMLInputElement>) => void;
+
+  /** Render the value as plain text (from `value`/`defaultValue`) instead of the input. */
+  viewMode?: boolean;
+
+  /** Shown in view mode instead of `value`/`defaultValue`. */
+  viewValue?: string | number;
 }
 
 /**
@@ -25,11 +31,22 @@ export function LUIUsernameInput({
   onKeyDown,
   id,
   required,
+  viewMode = false,
+  viewValue,
   className,
   ...rest
 }: LUIUsernameInputProps) {
   const autoId = useId();
   const inputId = id ?? autoId;
+
+  if (viewMode) {
+    return (
+      <div className="form-group lui-field view-mode">
+        {label && <label>{label}</label>}
+        <div className="view-value">{String(viewValue ?? rest.value ?? rest.defaultValue ?? '') || '-'}</div>
+      </div>
+    );
+  }
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);

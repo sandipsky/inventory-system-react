@@ -4,6 +4,7 @@ import { z } from 'zod'
 import {
   DrawerRef,
   LUIButton,
+  LUICard,
   LUICheckbox,
   LUICol,
   LUIFlex,
@@ -11,6 +12,7 @@ import {
   LUINumberInput,
   LUIRow,
   LUISelect,
+  LUISpacer,
   LUITable,
   LUITableCell,
   LUITextarea,
@@ -142,12 +144,12 @@ const ProductsForm = ({ drawerRef, product, view = false }: ProductsFormProps) =
   }
 
   return (
-    <form noValidate onSubmit={handleSubmit(onSubmit)} style={{ height: '100%' }}>
-      <LUIFlex vertical gap="middle" style={{ height: '100%', padding: '20px' }}>
-        <LUIFlex justify="space-between" align="center">
+    <form noValidate onSubmit={handleSubmit(onSubmit)} className="drawer">
+      <LUIFlex vertical className="drawer__layout">
+        <LUIFlex justify="space-between" align="center" className="drawer__header">
           <div>
-            <h2 style={{ margin: 0 }}>{view ? 'View' : isEdit ? 'Update' : 'Add'} Product</h2>
-            <p style={{ margin: 0, color: 'var(--text-secondary)' }}>
+            <h2 className='page-title'>{view ? 'View' : isEdit ? 'Update' : 'Add'} Product</h2>
+            <p className='sub-title'>
               {view ? 'Product information.' : 'Provide required information to add Product.'}
             </p>
           </div>
@@ -162,107 +164,135 @@ const ProductsForm = ({ drawerRef, product, view = false }: ProductsFormProps) =
           </LUIButton>
         </LUIFlex>
 
-        <LUIFlex
-          vertical
-          gap="large"
-          /* overflowX hidden: LUIRow's negative gutter margins would otherwise force a horizontal scrollbar. */
-          style={{ flex: 1, minHeight: 0, overflowY: 'auto', overflowX: 'hidden' }}
-        >
-          <LUIFlex vertical gap={12}>
+        <LUIFlex vertical gap="large" className="drawer__body">
+
+          <LUICard>
             <h3 className="title">Product Details</h3>
+            <LUISpacer h={12} />
             <LUIRow gutter={[16, 16]}>
-              <LUICol span={12} md={3}>
-                <LUITextInput
-                  label="Product Code"
-                  placeholder="Enter Product Code"
-                  error={errors.code?.message}
-                  disabled={view}
-                  {...register('code')}
-                />
-              </LUICol>
+                <LUICol span={12} md={3}>
+                  <LUITextInput
+                    label="Product Code"
+                    placeholder="Enter Product Code"
+                    error={errors.code?.message}
+                    viewMode={view}
+                    viewValue={product?.code}
+                    {...register('code')}
+                  />
+                </LUICol>
 
-              <LUICol span={12} md={3}>
-                <LUITextInput
-                  label="Product Name"
-                  placeholder="Enter Product Name"
-                  error={errors.name?.message}
-                  required
-                  disabled={view}
-                  {...register('name')}
-                />
-              </LUICol>
+                <LUICol span={12} md={3}>
+                  <LUITextInput
+                    label="Product Name"
+                    placeholder="Enter Product Name"
+                    error={errors.name?.message}
+                    required
+                    viewMode={view}
+                    viewValue={product?.name}
+                    {...register('name')}
+                  />
+                </LUICol>
 
-              <LUICol span={12} md={3}>
-                <LUITextInput
-                  label="Bar Code"
-                  placeholder="Enter Bar Code"
-                  error={errors.barcode?.message}
-                  disabled={view}
-                  {...register('barcode')}
-                />
-              </LUICol>
+                <LUICol span={12} md={3}>
+                  <LUITextInput
+                    label="Bar Code"
+                    placeholder="Enter Bar Code"
+                    error={errors.barcode?.message}
+                    viewMode={view}
+                    viewValue={product?.barcode}
+                    {...register('barcode')}
+                  />
+                </LUICol>
 
-              <LUICol span={12} md={3}>
-                <LUIToggle label="Active Status" disabled={view} {...register('is_active')} />
-              </LUICol>
+                <LUICol span={12} md={3}>
+                  <LUIToggle
+                    labelPosition='top'
+                    label="Active Status"
+                    viewMode={view}
+                    viewValue={product?.is_active}
+                    {...register('is_active')}
+                  />
+                </LUICol>
 
-              <LUICol span={12} md={3}>
-                <LUISelect
-                  label="Category"
-                  placeholder="Select Category"
-                  items={categories ?? []}
-                  bindLabel="name"
-                  bindValue="id"
-                  searchable
-                  disabled={view}
-                  value={watch('category_id') || null}
-                  onChange={(value) => setValue('category_id', value as number)}
-                />
-              </LUICol>
+                <LUICol span={12} md={3}>
+                  <LUISelect
+                    label="Category"
+                    placeholder="Select Category"
+                    items={categories ?? []}
+                    bindLabel="name"
+                    bindValue="id"
+                    searchable
+                    viewMode={view}
+                    viewValue={product?.category_name}
+                    value={watch('category_id') || null}
+                    onChange={(value) => setValue('category_id', value as number)}
+                  />
+                </LUICol>
 
-              <LUICol span={12} md={3}>
-                <LUISelect
-                  label="Tax Type"
-                  placeholder="Select Tax Type"
-                  items={taxTypes ?? []}
-                  bindLabel="name"
-                  bindValue="id"
-                  searchable
-                  disabled={view}
-                  value={watch('tax_type_id') || null}
-                  onChange={(value) => setValue('tax_type_id', value as number)}
-                />
-              </LUICol>
+                <LUICol span={12} md={3}>
+                  <LUISelect
+                    label="Tax Type"
+                    placeholder="Select Tax Type"
+                    items={taxTypes ?? []}
+                    bindLabel="name"
+                    bindValue="id"
+                    searchable
+                    viewMode={view}
+                    viewValue={product?.tax_type_name}
+                    value={watch('tax_type_id') || null}
+                    onChange={(value) => setValue('tax_type_id', value as number)}
+                  />
+                </LUICol>
 
-              <LUICol span={12} md={3}>
-                <div className="form-group">
-                  <label>Type</label>
-                  <LUIFlex gap="middle">
-                    <LUICheckbox label="Purchasable" disabled={view} {...register('purchasable')} />
-                    <LUICheckbox label="Sellable" disabled={view} {...register('sellable')} />
-                  </LUIFlex>
-                </div>
-              </LUICol>
+                <LUICol span={12} md={3}>
+                  <div className="form-group">
+                    {!view && <label>Type</label>}
+                    <LUIFlex gap="middle">
+                      <LUICheckbox
+                        label="Purchasable"
+                        viewMode={view}
+                        viewValue={product?.purchasable}
+                        {...register('purchasable')}
+                      />
+                      <LUICheckbox
+                        label="Sellable"
+                        viewMode={view}
+                        viewValue={product?.sellable}
+                        {...register('sellable')}
+                      />
+                    </LUIFlex>
+                  </div>
+                </LUICol>
 
-              <LUICol span={12} md={3}>
-                <LUIToggle label="Service Item" disabled={view} {...register('service_item')} />
-              </LUICol>
+                <LUICol span={12} md={3}>
+                  <LUIToggle
+                    labelPosition='top'
+                    label="Service Item"
+                    viewMode={view}
+                    viewValue={product?.service_item}
+                    {...register('service_item')}
+                  />
+                </LUICol>
 
-              <LUICol span={12}>
-                <LUITextarea
-                  label="Remarks"
-                  placeholder="Enter Remarks"
-                  rows={1}
-                  error={errors.remarks?.message}
-                  disabled={view}
-                  {...register('remarks')}
-                />
-              </LUICol>
+                <LUICol span={12}>
+                  <LUITextarea
+                    label="Remarks"
+                    placeholder="Enter Remarks"
+                    rows={1}
+                    error={errors.remarks?.message}
+                    viewMode={view}
+                    viewValue={product?.remarks}
+                    {...register('remarks')}
+                  />
+                </LUICol>
             </LUIRow>
-          </LUIFlex>
+          </LUICard>
 
-          <LUIFlex vertical gap={12}>
+
+
+          <LUICard>
             <h3 className="title">Unit of Measurement</h3>
+            <LUISpacer h={12} />
             <LUIRow gutter={[16, 16]}>
               <LUICol span={12} md={3}>
                 <LUISelect
@@ -272,7 +302,8 @@ const ProductsForm = ({ drawerRef, product, view = false }: ProductsFormProps) =
                   bindLabel="name"
                   bindValue="id"
                   searchable
-                  disabled={view}
+                  viewMode={view}
+                  viewValue={product?.packing_name}
                   value={watch('packing_id') || null}
                   onChange={(value) => setValue('packing_id', value as number)}
                 />
@@ -286,23 +317,26 @@ const ProductsForm = ({ drawerRef, product, view = false }: ProductsFormProps) =
                   bindLabel="name"
                   bindValue="id"
                   searchable
-                  disabled={view}
+                  viewMode={view}
+                  viewValue={product?.unit_name}
                   value={watch('unit_id') || null}
                   onChange={(value) => setValue('unit_id', value as number)}
                 />
               </LUICol>
             </LUIRow>
-          </LUIFlex>
+          </LUICard>
 
-          <LUIFlex vertical gap={12}>
+          <LUICard>
             <h3 className="title">Pricing</h3>
+            <LUISpacer h={12} />
             <LUIRow gutter={[16, 16]}>
               <LUICol span={12} md={3}>
                 <LUINumberInput
                   label="Cost Price"
                   placeholder="Enter Cost Price"
                   error={errors.cost_price?.message}
-                  disabled={view}
+                  viewMode={view}
+                  viewValue={product?.cost_price}
                   {...register('cost_price')}
                 />
               </LUICol>
@@ -312,7 +346,8 @@ const ProductsForm = ({ drawerRef, product, view = false }: ProductsFormProps) =
                   label="Selling Price"
                   placeholder="Enter Selling Price"
                   error={errors.selling_price?.message}
-                  disabled={view}
+                  viewMode={view}
+                  viewValue={product?.selling_price}
                   {...register('selling_price')}
                 />
               </LUICol>
@@ -322,22 +357,25 @@ const ProductsForm = ({ drawerRef, product, view = false }: ProductsFormProps) =
                   label="MRP"
                   placeholder="Enter MRP"
                   error={errors.mrp?.message}
-                  disabled={view}
+                  viewMode={view}
+                  viewValue={product?.mrp}
                   {...register('mrp')}
                 />
               </LUICol>
             </LUIRow>
-          </LUIFlex>
+          </LUICard>
 
-          <LUIFlex vertical gap={12}>
+          <LUICard>
             <h3 className="title">Stock Information</h3>
+            <LUISpacer h={12} />
             <LUIRow gutter={[16, 16]}>
               <LUICol span={12} md={3}>
                 <LUINumberInput
                   label="Max Stock"
                   placeholder="Enter Max Stock"
                   error={errors.max_stock?.message}
-                  disabled={view}
+                  viewMode={view}
+                  viewValue={product?.max_stock}
                   {...register('max_stock')}
                 />
               </LUICol>
@@ -347,7 +385,8 @@ const ProductsForm = ({ drawerRef, product, view = false }: ProductsFormProps) =
                   label="Min Stock"
                   placeholder="Enter Min Stock"
                   error={errors.min_stock?.message}
-                  disabled={view}
+                  viewMode={view}
+                  viewValue={product?.min_stock}
                   {...register('min_stock')}
                 />
               </LUICol>
@@ -357,39 +396,42 @@ const ProductsForm = ({ drawerRef, product, view = false }: ProductsFormProps) =
                   label="Valuation Method"
                   placeholder="Select"
                   items={VALUATION_METHODS}
-                  disabled={view}
+                  viewMode={view}
                   value={watch('valuation_method') || null}
                   onChange={(value) => setValue('valuation_method', value as string)}
                 />
               </LUICol>
 
               <LUICol span={12} md={3}>
-                <LUIToggle
+                <LUIToggle labelPosition='top'
                   label="Enable Batch Lot"
-                  disabled={view}
+                  viewMode={view}
+                  viewValue={product?.is_batch_available}
                   {...register('is_batch_available')}
                 />
               </LUICol>
 
               <LUICol span={12} md={3}>
-                <LUIToggle
+                <LUIToggle labelPosition='top'
                   label="Enable Expiry Date"
-                  disabled={view}
+                  viewMode={view}
+                  viewValue={product?.has_expiry_date}
                   {...register('has_expiry_date')}
                 />
               </LUICol>
 
               <LUICol span={12} md={3}>
-                <LUIToggle
+                <LUIToggle labelPosition='top'
                   label="Enable Manufacturing Date"
-                  disabled={view}
+                  viewMode={view}
+                  viewValue={product?.has_manufacturing_date}
                   {...register('has_manufacturing_date')}
                 />
               </LUICol>
             </LUIRow>
-          </LUIFlex>
+          </LUICard>
 
-          <LUIFlex vertical gap={12}>
+          <LUICard>
             <LUIFlex justify="space-between" align="center">
               <h3 className="title">Bonus/Free Information</h3>
               {!view && (
@@ -401,8 +443,9 @@ const ProductsForm = ({ drawerRef, product, view = false }: ProductsFormProps) =
                 </LUIButton>
               )}
             </LUIFlex>
+            <LUISpacer h={12} />
             <LUITable
-              columns={bonusColumns}
+              columns={view ? bonusColumns.filter((column) => column.key !== 'actions') : bonusColumns}
               data={bonusInfos.fields}
               rowKey="id"
               emptyText="No Bonus/Free Information Found."
@@ -412,7 +455,8 @@ const ProductsForm = ({ drawerRef, product, view = false }: ProductsFormProps) =
                   <LUINumberInput
                     placeholder="Enter Quantity"
                     error={errors.bonus_infos?.[index]?.min_quantity?.message}
-                    disabled={view}
+                    viewMode={view}
+                    viewValue={bonusInfos.fields[index]?.min_quantity}
                     {...register(`bonus_infos.${index}.min_quantity`)}
                   />
                 )}
@@ -423,31 +467,33 @@ const ProductsForm = ({ drawerRef, product, view = false }: ProductsFormProps) =
                   <LUINumberInput
                     placeholder="Enter Bonus Quantity"
                     error={errors.bonus_infos?.[index]?.bonus_quantity?.message}
-                    disabled={view}
+                    viewMode={view}
+                    viewValue={bonusInfos.fields[index]?.bonus_quantity}
                     {...register(`bonus_infos.${index}.bonus_quantity`)}
                   />
                 )}
               </LUITableCell>
 
-              <LUITableCell column="actions">
-                {({ index }) => (
-                  <LUIButton
-                    variant="outlined"
-                    size="sm"
-                    rounded
-                    aria-label="Remove entry"
-                    disabled={view}
-                    onClick={() => bonusInfos.remove(index)}
-                  >
-                    <LUIIcon name="trash" size={16} />
-                  </LUIButton>
-                )}
-              </LUITableCell>
+              {!view && (
+                <LUITableCell column="actions">
+                  {({ index }) => (
+                    <LUIButton
+                      variant="outlined"
+                      size="sm"
+                      rounded
+                      aria-label="Remove entry"
+                      onClick={() => bonusInfos.remove(index)}
+                    >
+                      <LUIIcon name="trash" size={16} />
+                    </LUIButton>
+                  )}
+                </LUITableCell>
+              )}
             </LUITable>
-          </LUIFlex>
+          </LUICard>
         </LUIFlex>
 
-        <LUIFlex justify="end" gap="small">
+        {!view && <LUIFlex justify="end" gap="small" className="drawer__footer">
           <LUIButton variant="outlined" disabled={saving} onClick={() => drawerRef.close()}>
             {view ? 'Close' : 'Cancel'}
           </LUIButton>
@@ -456,7 +502,7 @@ const ProductsForm = ({ drawerRef, product, view = false }: ProductsFormProps) =
               {saving ? 'Saving…' : `${isEdit ? 'Update' : 'Add'} Product`}
             </LUIButton>
           )}
-        </LUIFlex>
+        </LUIFlex>}
       </LUIFlex>
     </form>
   )

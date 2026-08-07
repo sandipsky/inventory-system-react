@@ -6,8 +6,14 @@ export interface LUIToggleProps
   extends Omit<ComponentPropsWithRef<'input'>, 'type' | 'children'> {
   /** Label rendered beside the switch. */
   label?: string;
-  /** Which side of the control the label sits on. */
-  labelPosition?: 'left' | 'right';
+  /** Where the label sits relative to the control. */
+  labelPosition?: 'left' | 'right' | 'top';
+
+  /** Render the state as plain "Yes"/"No" text (from `checked`/`defaultChecked`) instead of the switch. */
+  viewMode?: boolean;
+
+  /** State shown in view mode instead of `checked`/`defaultChecked`. */
+  viewValue?: boolean;
 }
 
 /**
@@ -19,12 +25,23 @@ export interface LUIToggleProps
 export function LUIToggle({
   label = '',
   labelPosition = 'right',
+  viewMode = false,
+  viewValue,
   className,
   ...rest
 }: LUIToggleProps) {
+  if (viewMode) {
+    return (
+      <div className="form-group lui-control-host view-mode">
+        {label && <label>{label}</label>}
+        <div className="view-value">{(viewValue ?? rest.checked ?? rest.defaultChecked) ? 'Yes' : 'No'}</div>
+      </div>
+    );
+  }
+
   const rowClasses = [
     'control-row',
-    labelPosition === 'left' ? 'label-left' : '',
+    labelPosition === 'left' ? 'label-left' : labelPosition === 'top' ? 'label-top' : '',
     className ?? '',
   ]
     .filter(Boolean)

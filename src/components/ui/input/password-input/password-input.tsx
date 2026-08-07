@@ -21,6 +21,12 @@ export interface LUIPasswordInputProps
 
   /** Called when Enter is pressed in the field. */
   onEnter?: (event: KeyboardEvent<HTMLInputElement>) => void;
+
+  /** Render the value as plain text (from `value`/`defaultValue`) instead of the input. */
+  viewMode?: boolean;
+
+  /** Shown in view mode instead of the typed value. */
+  viewValue?: string | number;
 }
 
 /**
@@ -39,6 +45,8 @@ export function LUIPasswordInput({
   id,
   required,
   disabled,
+  viewMode = false,
+  viewValue,
   className,
   ...rest
 }: LUIPasswordInputProps) {
@@ -51,6 +59,15 @@ export function LUIPasswordInput({
      input itself stays uncontrolled unless the consumer passes `value`. */
   const [internalValue, setInternalValue] = useState(() => String(rest.defaultValue ?? ''));
   const value = rest.value != null ? String(rest.value) : internalValue;
+
+  if (viewMode) {
+    return (
+      <div className="form-group lui-field view-mode">
+        {label && <label>{label}</label>}
+        <div className="view-value">{String(viewValue ?? value) || '-'}</div>
+      </div>
+    );
+  }
 
   const hasMinLength = value.length >= 8;
   const hasUpperLower = /[a-z]/.test(value) && /[A-Z]/.test(value);

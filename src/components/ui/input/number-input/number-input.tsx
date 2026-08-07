@@ -53,6 +53,12 @@ export interface LUINumberInputProps
    * field is empty or incomplete.
    */
   onValueChange?: (value: number | null) => void;
+
+  /** Render the value (with `prefix`/`suffix`) as plain text instead of the input. */
+  viewMode?: boolean;
+
+  /** Shown in view mode instead of `value`/`defaultValue` (prefix/suffix still apply). */
+  viewValue?: string | number;
 }
 
 function parse(s: string): number | null {
@@ -89,11 +95,23 @@ export function LUINumberInput({
   onKeyDown,
   id,
   required,
+  viewMode = false,
+  viewValue,
   className,
   ...rest
 }: LUINumberInputProps) {
   const autoId = useId();
   const inputId = id ?? autoId;
+
+  if (viewMode) {
+    const text = String(viewValue ?? rest.value ?? rest.defaultValue ?? '');
+    return (
+      <div className="form-group lui-field view-mode">
+        {label && <label>{label}</label>}
+        <div className="view-value">{text ? `${prefix}${text}${suffix}` : '-'}</div>
+      </div>
+    );
+  }
 
   const inputMode = decimalPlaces === 0 ? 'numeric' : 'decimal';
 

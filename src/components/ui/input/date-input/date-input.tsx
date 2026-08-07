@@ -198,6 +198,12 @@ export interface LUIDateInputProps {
   onChange?: (value: Date | null) => void;
   /** Called when the user flips the AD/BS toggle. */
   onCalendarChange?: (calendar: CalendarSystem) => void;
+
+  /** Render the formatted date as plain text instead of the picker. */
+  viewMode?: boolean;
+
+  /** Shown in view mode instead of the formatted `value`. */
+  viewValue?: string | number;
 }
 
 /**
@@ -230,6 +236,8 @@ export function LUIDateInput({
   error,
   onChange,
   onCalendarChange,
+  viewMode = false,
+  viewValue,
 }: LUIDateInputProps) {
   const autoId = useId();
   const inputId = id ?? `l-date-input-${autoId}`;
@@ -770,6 +778,15 @@ export function LUIDateInput({
   };
 
   // --- Render ---
+
+  if (viewMode) {
+    return (
+      <div className="form-group lui-field view-mode">
+        {label && <label>{label}</label>}
+        <div className="view-value">{String(viewValue ?? displayValue) || '-'}</div>
+      </div>
+    );
+  }
 
   return (
     <div className="form-group lui-field" ref={hostRef}>

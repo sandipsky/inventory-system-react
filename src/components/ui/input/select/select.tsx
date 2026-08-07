@@ -88,6 +88,12 @@ export interface LUISelectProps {
   /** Called when focus leaves the component — wire to react-hook-form Controller's `field.onBlur`. */
   onBlur?: () => void;
 
+  /** Render the selected option label(s) as plain text instead of the select. */
+  viewMode?: boolean;
+
+  /** Shown in view mode instead of the resolved option label(s) — e.g. a name the API already provides when `items` aren't loaded. */
+  viewValue?: string | number;
+
   className?: string;
 }
 
@@ -122,6 +128,8 @@ export function LUISelect({
   onChange,
   onSearch,
   onBlur,
+  viewMode = false,
+  viewValue,
   className,
 }: LUISelectProps) {
   const autoId = useId();
@@ -586,6 +594,18 @@ export function LUISelect({
       )}
     </div>
   );
+
+  if (viewMode) {
+    const viewText = multiple
+      ? selectedOptions.map((option) => option.label).join(', ')
+      : selectedLabel;
+    return (
+      <div className={['form-group', 'lui-field', 'view-mode', className ?? ''].filter(Boolean).join(' ')}>
+        {label && <label>{label}</label>}
+        <div className="view-value">{String(viewValue ?? viewText) || '-'}</div>
+      </div>
+    );
+  }
 
   return (
     <div

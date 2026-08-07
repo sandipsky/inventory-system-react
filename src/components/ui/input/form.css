@@ -133,6 +133,25 @@
   color: var(--info);
 }
 
+/* ================= View mode (`viewMode` prop) =================
+   The field renders its value as plain text instead of the input container. */
+
+.form-group.view-mode > label {
+  color: var(--text-quaternary);
+}
+
+.form-group .view-value {
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+/* Textarea values keep their line breaks. */
+.form-group .view-value.pre-wrap {
+  white-space: pre-wrap;
+}
+
 /* ================= Selection controls (toggle / checkbox / radio) =================
    Layout primitives shared by all three; each control's visuals live in its own css. */
 
@@ -145,6 +164,13 @@
 
 .control-row.label-left {
   flex-direction: row-reverse;
+}
+
+/* Label above the control — matches the 6px label/field gap of regular fields. */
+.control-row.label-top {
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  gap: 6px;
 }
 
 .control-row:has(input:disabled) {

@@ -20,14 +20,20 @@ export interface LUIRadioProps
   label?: string;
   /** Options to render — one radio per entry. */
   options?: RadioOption[];
-  /** Which side of each control the option label sits on. */
-  labelPosition?: 'left' | 'right';
+  /** Where each option label sits relative to its control. */
+  labelPosition?: 'left' | 'right' | 'top';
   /** `inline` lays options out in a row (default); `stacked` in a column. */
   orientation?: 'inline' | 'stacked';
   /** Controlled selected value — pair with `onChange` (`e.target.value` is a string). */
   value?: string | number;
   /** Initially selected value for uncontrolled usage. */
   defaultValue?: string | number;
+
+  /** Render the selected option's label as plain text instead of the radio group. */
+  viewMode?: boolean;
+
+  /** Option value resolved and shown in view mode instead of `value`/`defaultValue`. */
+  viewValue?: string | number;
 }
 
 /**
@@ -47,17 +53,36 @@ export function LUIRadio({
   orientation = 'inline',
   value,
   defaultValue,
+  viewMode = false,
+  viewValue,
   className,
   ...rest
 }: LUIRadioProps) {
   const autoName = useId();
   const groupName = name ?? autoName;
 
+  if (viewMode) {
+    const selectedValue = viewValue ?? value ?? defaultValue;
+    const selected = options.find((option) => option.value === selectedValue);
+    return (
+      <div
+        className={['form-group', 'lui-control-host', 'view-mode', className ?? ''].filter(Boolean).join(' ')}
+      >
+        {label && <label>{label}</label>}
+        <div className="view-value">{selected?.label ?? '-'}</div>
+      </div>
+    );
+  }
+
   const groupClasses = ['radio-group', orientation === 'stacked' ? 'stacked' : '']
     .filter(Boolean)
     .join(' ');
 
-  const rowClasses = ['control-row', 'radio-control', labelPosition === 'left' ? 'label-left' : '']
+  const rowClasses = [
+    'control-row',
+    'radio-control',
+    labelPosition === 'left' ? 'label-left' : labelPosition === 'top' ? 'label-top' : '',
+  ]
     .filter(Boolean)
     .join(' ');
 

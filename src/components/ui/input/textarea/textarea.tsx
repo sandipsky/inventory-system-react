@@ -14,6 +14,12 @@ export interface LUITextareaProps extends ComponentPropsWithRef<'textarea'> {
 
   /** Called when Enter is pressed in the field (a newline is still inserted). */
   onEnter?: (event: KeyboardEvent<HTMLTextAreaElement>) => void;
+
+  /** Render the value as plain text (line breaks preserved) instead of the textarea. */
+  viewMode?: boolean;
+
+  /** Shown in view mode instead of `value`/`defaultValue`. */
+  viewValue?: string | number;
 }
 
 /**
@@ -31,11 +37,22 @@ export function LUITextarea({
   id,
   rows = 4,
   required,
+  viewMode = false,
+  viewValue,
   className,
   ...rest
 }: LUITextareaProps) {
   const autoId = useId();
   const textareaId = id ?? autoId;
+
+  if (viewMode) {
+    return (
+      <div className="form-group lui-field view-mode">
+        {label && <label>{label}</label>}
+        <div className="view-value pre-wrap">{String(viewValue ?? rest.value ?? rest.defaultValue ?? '') || '-'}</div>
+      </div>
+    );
+  }
 
   const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     onKeyDown?.(event);
