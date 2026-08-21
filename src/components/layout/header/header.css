@@ -47,3 +47,29 @@
     transition: none;
   }
 }
+
+.header-user {
+  margin-left: auto;
+}
+
+.header-user-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 6px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  font: inherit;
+  font-size: 13px;
+  color: var(--text-primary);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--bg-dark);
+  }
+}
+
+.header-user-name {
+  white-space: nowrap;
+}
