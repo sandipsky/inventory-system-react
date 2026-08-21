@@ -1,8 +1,8 @@
 import { useAuthStore, useUserRoleOperations } from '@/features/auth';
 import { useAuthImage } from '@/services/image.service';
-import { LUIAvatar } from '../../ui/avatar/avatar';
-import { LUIIcon } from '../../ui/icon/icon';
-import { LUIMenu } from '../../ui/menu/menu';
+import { LUIAvatar } from '../../../ui/avatar/avatar';
+import { LUIIcon } from '../../../ui/icon/icon';
+import { LUIMenu } from '../../../ui/menu/menu';
 
 export function HeaderUser() {
   const { data: profile } = useUserRoleOperations();

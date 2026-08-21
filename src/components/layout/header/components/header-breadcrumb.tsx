@@ -1,5 +1,5 @@
 import { useRouterState } from '@tanstack/react-router';
-import { LUIBreadcrumb, type BreadcrumbItem } from '../../ui/breadcrumb/breadcrumb';
+import { LUIBreadcrumb, type BreadcrumbItem } from '../../../ui/breadcrumb/breadcrumb';
 
 const toLabel = (segment: string) =>
   segment

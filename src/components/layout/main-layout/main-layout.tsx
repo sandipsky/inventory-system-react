@@ -1,7 +1,5 @@
 import { useRef, type ReactNode } from 'react';
 import { Header } from '../header/header';
-import { HeaderBreadcrumb } from '../header/header-breadcrumb';
-import { HeaderUser } from '../header/header-user';
 import { Sidebar, type SidebarHandle } from '../sidebar/sidebar';
 import './main-layout.css';
 
@@ -17,10 +15,7 @@ export function MainLayout({ children }: MainLayoutProps) {
       <Sidebar ref={sidebar} />
 
       <div className="main-area">
-        <Header onMenuToggle={() => sidebar.current?.toggle()}>
-          <HeaderBreadcrumb />
-          <HeaderUser />
-        </Header>
+        <Header onMenuToggle={() => sidebar.current?.toggle()} />
         <main className="page-content">{children}</main>
       </div>
     </div>

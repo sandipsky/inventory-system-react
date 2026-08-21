@@ -1,11 +1,16 @@
 import type { ComponentPropsWithRef } from 'react';
+import { HeaderBreadcrumb } from './components/header-breadcrumb';
+import { HeaderCalculator } from './components/header-calculator';
+import { HeaderNotification } from './components/header-notification';
+import { HeaderPrint } from './components/header-print';
+import { HeaderUser } from './components/header-user';
 import './header.css';
 
 export interface HeaderProps extends ComponentPropsWithRef<'header'> {
   onMenuToggle?: () => void;
 }
 
-export function Header({ onMenuToggle, className, children, ...rest }: HeaderProps) {
+export function Header({ onMenuToggle, className, ...rest }: HeaderProps) {
   return (
     <header className={['header', className ?? ''].filter(Boolean).join(' ')} {...rest}>
       <button
@@ -24,7 +29,16 @@ export function Header({ onMenuToggle, className, children, ...rest }: HeaderPro
         </svg>
       </button>
 
-      <div className="header-content">{children}</div>
+      <div className="header-content">
+        <HeaderBreadcrumb />
+
+        <div className="header-actions">
+          <HeaderPrint />
+          <HeaderCalculator />
+          <HeaderNotification />
+          <HeaderUser />
+        </div>
+      </div>
     </header>
   );
 }
