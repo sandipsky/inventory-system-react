@@ -1,0 +1,5 @@
+export * from './customer.api'
+export * from './customer.query'
+export * from './customer.types'
+export { default as CustomerPage } from './components/CustomerPage'
+export { default as CustomerForm } from './components/CustomerForm'

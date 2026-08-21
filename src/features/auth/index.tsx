@@ -1,2 +1,2 @@
 export { LoginPage } from './components/LoginPage'
-export { useAuthStore } from './auth.store'
+export { useAuthStore, getToken } from './auth.store'

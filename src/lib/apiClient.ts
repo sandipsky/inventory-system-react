@@ -1,5 +1,5 @@
 import { config } from '@/config/env';
-import { useAuthStore } from '@/features/auth';
+import { getToken, useAuthStore } from '@/features/auth';
 import axios, { type AxiosError } from 'axios';
 
 export const apiClient = axios.create({
@@ -12,7 +12,7 @@ export const apiClient = axios.create({
 });
 
 apiClient.interceptors.request.use((requestConfig) => {
-  const token = useAuthStore.getState().token;
+  const token = getToken();
   if (token) {
     requestConfig.headers.Authorization = `Bearer ${token}`;
   }

@@ -8,8 +8,9 @@ const getDropdown = async (master: string, status: string) => {
 }
 
 /** Active-only `{ id, name }` options of a master resource, for selects and filters. */
-export const useDropdown = (master: string) =>
+export const useDropdown = (master: string, enabled = true) =>
   useQuery({
     queryKey: ['dropdown', master, 'active'],
     queryFn: () => getDropdown(master, 'active'),
+    enabled,
   })

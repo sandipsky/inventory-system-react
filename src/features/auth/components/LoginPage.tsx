@@ -19,7 +19,7 @@ export const LoginPage = () => {
       { username, password },
       {
         onSuccess: (data) => {
-          setAuth(data.token, data.user);
+          setAuth(data.token);
           navigate({ to: '/' });
         },
         onError: (error) => {
