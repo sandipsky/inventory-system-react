@@ -1,0 +1,42 @@
+.permission-select-all {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--accent-bg);
+
+  & .form-group {
+    margin: 0;
+  }
+
+  & .control-row {
+    font-weight: 600;
+  }
+}
+
+.permission-select-all-hint {
+  font-size: 13px;
+  color: var(--accent-dark);
+}
+
+.permission-module {
+  padding: 14px 0;
+  border-bottom: 1px dashed var(--separator);
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 4px;
+  }
+
+  & .permission-module-head .control-row {
+    font-weight: 600;
+  }
+}
+
+.permission-operations {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 6px 24px;
+  padding: 10px 0 0 28px;
+}

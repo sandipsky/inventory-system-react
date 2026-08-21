@@ -1,0 +1,5 @@
+export * from './roles-permissions.api'
+export * from './roles-permissions.query'
+export * from './roles-permissions.types'
+export { default as RolesPermissionsPage } from './components/RolesPermissionsPage'
+export { default as RolesPermissionsForm } from './components/RolesPermissionsForm'
