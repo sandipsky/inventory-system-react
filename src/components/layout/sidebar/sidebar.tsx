@@ -34,7 +34,12 @@ export function Sidebar({ ref }: SidebarProps) {
 
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [openGroup, setOpenGroup] = useState<string | null>(null);
+  /* Start with the group that owns the current route expanded. */
+  const [openGroup, setOpenGroup] = useState<string | null>(
+    () =>
+      SIDEBAR_ITEMS.find((item) => item.children?.some((child) => child.to === pathname))?.label ??
+      null,
+  );
   const [isMobile, setIsMobile] = useState(() => window.matchMedia(MOBILE_BREAKPOINT).matches);
 
   useEffect(() => {
@@ -89,6 +94,11 @@ export function Sidebar({ ref }: SidebarProps) {
                 label={item.label}
                 collapsed={collapsed}
                 expanded={openGroup === item.label}
+                /* Show where the active page lives whenever its child list is hidden. */
+                active={
+                  item.children.some((child) => child.to === pathname) &&
+                  (collapsed || openGroup !== item.label)
+                }
                 onClick={() => setOpenGroup(openGroup === item.label ? null : item.label)}
               >
                 {item.children.map((child) => (

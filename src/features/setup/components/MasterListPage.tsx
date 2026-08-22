@@ -19,6 +19,7 @@ import {
   type TableColumn,
   type TableSort,
 } from '@/components'
+import { useAuthStore } from '@/features/auth'
 import { createMasterApi, getErrorMessage } from '../master.api'
 import { createMasterQueries } from '../master.query'
 import type { IMasterEntity } from '../master.types'
@@ -77,6 +78,12 @@ export default function MasterListPage({
   const drawer = useLUIDrawer()
   const modal = useLUIModal()
   const notify = useLUINotification()
+
+  const operations = useAuthStore((s) => s.operations)
+  const operationModule = title.replace(/\s+/g, '')
+  const canCreate = operations.includes(`Create${operationModule}`)
+  const canEdit = operations.includes(`Edit${operationModule}`)
+  const canDelete = operations.includes(`Delete${operationModule}`)
 
   const queries = useMemo(() => createMasterQueries(endpoint, createMasterApi(endpoint)), [endpoint])
   const filterColumns = withTaxRate ? [STATUS_FILTER, TAX_RATE_FILTER] : [STATUS_FILTER]
@@ -161,7 +168,7 @@ export default function MasterListPage({
       <LUIFlex justify="space-between" align="center">
         <LUIFilter searchBy="name" filterColumns={filterColumns} onFilterChange={onFilterChange} />
 
-        <LUIButton onClick={() => openForm()}>Add {title}</LUIButton>
+        {canCreate && <LUIButton onClick={() => openForm()}>Add {title}</LUIButton>}
       </LUIFlex>
 
       <LUICard className="table-card">
@@ -190,25 +197,29 @@ export default function MasterListPage({
           <LUITableCell<IMasterEntity> column="actions">
             {({ row }) => (
               <LUIFlex justify="center" gap="small">
-                <LUIButton
-                  variant="outlined"
-                  size="sm"
-                  rounded
-                  aria-label={`Edit ${row.name}`}
-                  onClick={() => openForm(row)}
-                >
-                  <LUIIcon name="edit" size={16} />
-                </LUIButton>
+                {canEdit && (
+                  <LUIButton
+                    variant="outlined"
+                    size="sm"
+                    rounded
+                    aria-label={`Edit ${row.name}`}
+                    onClick={() => openForm(row)}
+                  >
+                    <LUIIcon name="edit" size={16} />
+                  </LUIButton>
+                )}
 
-                <LUIButton
-                  variant="outlined"
-                  size="sm"
-                  rounded
-                  aria-label={`Delete ${row.name}`}
-                  onClick={() => confirmDelete(row)}
-                >
-                  <LUIIcon name="trash" size={16} />
-                </LUIButton>
+                {canDelete && (
+                  <LUIButton
+                    variant="outlined"
+                    size="sm"
+                    rounded
+                    aria-label={`Delete ${row.name}`}
+                    onClick={() => confirmDelete(row)}
+                  >
+                    <LUIIcon name="trash" size={16} />
+                  </LUIButton>
+                )}
               </LUIFlex>
             )}
           </LUITableCell>

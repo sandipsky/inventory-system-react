@@ -20,6 +20,7 @@ import {
   type TableColumn,
   type TableSort,
 } from '@/components'
+import { useAuthStore } from '@/features/auth'
 import { useRoleList, useDeleteRole } from '../roles-permissions.query'
 import type { IRole } from '../roles-permissions.types'
 import RolesPermissionsForm from './RolesPermissionsForm'
@@ -50,6 +51,11 @@ const RolesPermissionsPage = () => {
   const drawer = useLUIDrawer()
   const modal = useLUIModal()
   const notify = useLUINotification()
+
+  const operations = useAuthStore((s) => s.operations)
+  const canCreate = operations.includes('CreateRole')
+  const canEdit = operations.includes('EditRole')
+  const canDelete = operations.includes('DeleteRole')
 
   const [pageIndex, setPageIndex] = useState(0)
   const [pageSize, setPageSize] = useState(10)
@@ -127,7 +133,7 @@ const RolesPermissionsPage = () => {
           onFilterChange={onFilterChange}
         />
 
-        <LUIButton onClick={() => openForm()}>Add Role</LUIButton>
+        {canCreate && <LUIButton onClick={() => openForm()}>Add Role</LUIButton>}
       </LUIFlex>
 
       <LUICard className="table-card">
@@ -166,25 +172,29 @@ const RolesPermissionsPage = () => {
                   <LUIIcon name="eye" size={16} />
                 </LUIButton>
 
-                <LUIButton
-                  variant="outlined"
-                  size="sm"
-                  rounded
-                  aria-label={`Edit ${row.name}`}
-                  onClick={() => openForm(row)}
-                >
-                  <LUIIcon name="edit" size={16} />
-                </LUIButton>
+                {canEdit && (
+                  <LUIButton
+                    variant="outlined"
+                    size="sm"
+                    rounded
+                    aria-label={`Edit ${row.name}`}
+                    onClick={() => openForm(row)}
+                  >
+                    <LUIIcon name="edit" size={16} />
+                  </LUIButton>
+                )}
 
-                <LUIButton
-                  variant="outlined"
-                  size="sm"
-                  rounded
-                  aria-label={`Delete ${row.name}`}
-                  onClick={() => confirmDelete(row)}
-                >
-                  <LUIIcon name="trash" size={16} />
-                </LUIButton>
+                {canDelete && (
+                  <LUIButton
+                    variant="outlined"
+                    size="sm"
+                    rounded
+                    aria-label={`Delete ${row.name}`}
+                    onClick={() => confirmDelete(row)}
+                  >
+                    <LUIIcon name="trash" size={16} />
+                  </LUIButton>
+                )}
               </LUIFlex>
             )}
           </LUITableCell>

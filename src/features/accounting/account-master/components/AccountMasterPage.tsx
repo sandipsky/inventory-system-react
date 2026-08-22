@@ -20,6 +20,7 @@ import {
   type TableColumn,
   type TableSort,
 } from '@/components'
+import { useAuthStore } from '@/features/auth'
 import { useAccountMasterList, useAccountTypes, useDeleteAccountMaster } from '../account-master.query'
 import type { IAccountMaster } from '../account-master.types'
 import AccountMasterForm from './AccountMasterForm'
@@ -55,6 +56,11 @@ const AccountMasterPage = () => {
   const drawer = useLUIDrawer()
   const modal = useLUIModal()
   const notify = useLUINotification()
+
+  const operations = useAuthStore((s) => s.operations)
+  const canCreate = operations.includes('CreateAccountMaster')
+  const canEdit = operations.includes('EditAccountMaster')
+  const canDelete = operations.includes('DeleteAccountMaster')
 
   const [pageIndex, setPageIndex] = useState(0)
   const [pageSize, setPageSize] = useState(10)
@@ -145,7 +151,7 @@ const AccountMasterPage = () => {
           onFilterChange={onFilterChange}
         />
 
-        <LUIButton onClick={() => openForm()}>Add Account</LUIButton>
+        {canCreate && <LUIButton onClick={() => openForm()}>Add Account</LUIButton>}
       </LUIFlex>
 
       <LUICard className="table-card">
@@ -184,7 +190,7 @@ const AccountMasterPage = () => {
                   <LUIIcon name="eye" size={16} />
                 </LUIButton>
 
-                {!row.is_system_generated && (
+                {canEdit && !row.is_system_generated && (
                   <LUIButton
                     variant="outlined"
                     size="sm"
@@ -196,7 +202,7 @@ const AccountMasterPage = () => {
                   </LUIButton>
                 )}
 
-                {!row.is_system_generated && row.deletable && (
+                {canDelete && !row.is_system_generated && row.deletable && (
                   <LUIButton
                     variant="outlined"
                     size="sm"
