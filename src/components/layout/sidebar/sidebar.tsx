@@ -1,7 +1,8 @@
 import { useEffect, useImperativeHandle, useState, type Ref } from 'react';
 import { useNavigate, useRouterState } from '@tanstack/react-router';
+import { useAuthStore } from '@/features/auth';
 import { SidebarItem } from './sidebar-item';
-import { SIDEBAR_ITEMS } from './sidebar-data';
+import { SIDEBAR_ITEMS, type SidebarItemData } from './sidebar-data';
 import './sidebar.css';
 
 /** Keep in sync with the media query in sidebar.css. */
@@ -18,6 +19,18 @@ export interface SidebarProps {
 export function Sidebar({ ref }: SidebarProps) {
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  const operations = useAuthStore((s) => s.operations);
+
+  const canView = (item: SidebarItemData) =>
+    !item.permission ||
+    (Array.isArray(item.permission)
+      ? item.permission.some((operation) => operations.includes(operation))
+      : operations.includes(item.permission as string));
+
+  const visibleItems = SIDEBAR_ITEMS.map((item) =>
+    item.children ? { ...item, children: item.children.filter(canView) } : item,
+  ).filter((item) => (item.children ? item.children.length > 0 : canView(item)));
 
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -68,7 +81,7 @@ export function Sidebar({ ref }: SidebarProps) {
         <div className="sidebar-brand">ABIS</div>
 
         <div className="sidebar-nav">
-          {SIDEBAR_ITEMS.map((item) =>
+          {visibleItems.map((item) =>
             item.children ? (
               <SidebarItem
                 key={item.label}

@@ -105,7 +105,7 @@ const ProductsForm = ({ drawerRef, product, view = false }: ProductsFormProps) =
   const createProducts = useCreateProducts()
   const updateProducts = useUpdateProducts()
 
-  const { data: categories } = useDropdown('categorys')
+  const { data: categories } = useDropdown('category')
   const { data: taxTypes } = useDropdown('taxtypes')
   const { data: packings } = useDropdown('packings')
   const { data: units } = useDropdown('units')

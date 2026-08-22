@@ -71,7 +71,7 @@ const ProductsPage = () => {
   const [sort, setSort] = useState<TableSort | null>(null)
   const [filters, setFilters] = useState<Record<string, string>>({})
 
-  const { data: categories } = useDropdown('categorys')
+  const { data: categories } = useDropdown('category')
   const { data: taxTypes } = useDropdown('taxtypes')
   const { data: packings } = useDropdown('packings')
   const { data: units } = useDropdown('units')
