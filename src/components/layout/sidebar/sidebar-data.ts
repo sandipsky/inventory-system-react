@@ -59,5 +59,12 @@ export const SIDEBAR_ITEMS: readonly SidebarItemData[] = [
   { icon: 'reports', label: 'Reports', to: '/reports' },
   { icon: 'roles-permission', label: 'Roles & Permissions', to: '/roles-permissions' },
   { icon: 'users', label: 'Users', to: '/user' },
-  { icon: 'settings', label: 'Settings', to: '/settings' },
+  {
+    icon: 'settings',
+    label: 'Settings',
+    children: [
+      { icon: 'configuration', label: 'Configuration', to: '/settings/configuration' },
+      { icon: 'document-numbering-scheme', label: 'Document Numbering', to: '/settings/document-numbering' },
+    ],
+  },
 ];

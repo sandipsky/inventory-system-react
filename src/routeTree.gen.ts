@@ -15,7 +15,6 @@ import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedProductsRouteImport } from './routes/_authenticated/products'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedRolesPermissionsRouteImport } from './routes/_authenticated/roles-permissions'
-import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedUserRouteImport } from './routes/_authenticated/user'
 import { Route as AuthenticatedAccountingAccountMasterRouteImport } from './routes/_authenticated/accounting/account-master'
 import { Route as AuthenticatedAccountingJournalEntryRouteImport } from './routes/_authenticated/accounting/journal-entry'
@@ -31,6 +30,8 @@ import { Route as AuthenticatedPurchaseVendorRouteImport } from './routes/_authe
 import { Route as AuthenticatedSalesCustomerRouteImport } from './routes/_authenticated/sales/customer'
 import { Route as AuthenticatedSalesSalesEntryRouteImport } from './routes/_authenticated/sales/sales-entry'
 import { Route as AuthenticatedSalesSalesReturnRouteImport } from './routes/_authenticated/sales/sales-return'
+import { Route as AuthenticatedSettingsConfigurationRouteImport } from './routes/_authenticated/settings/configuration'
+import { Route as AuthenticatedSettingsDocumentNumberingRouteImport } from './routes/_authenticated/settings/document-numbering'
 import { Route as AuthenticatedSetupCategoryRouteImport } from './routes/_authenticated/setup/category'
 import { Route as AuthenticatedSetupPackingRouteImport } from './routes/_authenticated/setup/packing'
 import { Route as AuthenticatedSetupTaxTypeRouteImport } from './routes/_authenticated/setup/tax-type'
@@ -66,11 +67,6 @@ const AuthenticatedRolesPermissionsRoute =
     path: '/roles-permissions',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
-const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
 const AuthenticatedUserRoute = AuthenticatedUserRouteImport.update({
   id: '/user',
   path: '/user',
@@ -160,6 +156,18 @@ const AuthenticatedSalesSalesReturnRoute =
     path: '/sales/sales-return',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedSettingsConfigurationRoute =
+  AuthenticatedSettingsConfigurationRouteImport.update({
+    id: '/settings/configuration',
+    path: '/settings/configuration',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSettingsDocumentNumberingRoute =
+  AuthenticatedSettingsDocumentNumberingRouteImport.update({
+    id: '/settings/document-numbering',
+    path: '/settings/document-numbering',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedSetupCategoryRoute =
   AuthenticatedSetupCategoryRouteImport.update({
     id: '/setup/category',
@@ -190,7 +198,6 @@ export interface FileRoutesByFullPath {
   '/products': typeof AuthenticatedProductsRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/roles-permissions': typeof AuthenticatedRolesPermissionsRoute
-  '/settings': typeof AuthenticatedSettingsRoute
   '/user': typeof AuthenticatedUserRoute
   '/accounting/account-master': typeof AuthenticatedAccountingAccountMasterRoute
   '/accounting/journal-entry': typeof AuthenticatedAccountingJournalEntryRoute
@@ -206,6 +213,8 @@ export interface FileRoutesByFullPath {
   '/sales/customer': typeof AuthenticatedSalesCustomerRoute
   '/sales/sales-entry': typeof AuthenticatedSalesSalesEntryRoute
   '/sales/sales-return': typeof AuthenticatedSalesSalesReturnRoute
+  '/settings/configuration': typeof AuthenticatedSettingsConfigurationRoute
+  '/settings/document-numbering': typeof AuthenticatedSettingsDocumentNumberingRoute
   '/setup/category': typeof AuthenticatedSetupCategoryRoute
   '/setup/packing': typeof AuthenticatedSetupPackingRoute
   '/setup/tax-type': typeof AuthenticatedSetupTaxTypeRoute
@@ -216,7 +225,6 @@ export interface FileRoutesByTo {
   '/products': typeof AuthenticatedProductsRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/roles-permissions': typeof AuthenticatedRolesPermissionsRoute
-  '/settings': typeof AuthenticatedSettingsRoute
   '/user': typeof AuthenticatedUserRoute
   '/': typeof AuthenticatedIndexRoute
   '/accounting/account-master': typeof AuthenticatedAccountingAccountMasterRoute
@@ -233,6 +241,8 @@ export interface FileRoutesByTo {
   '/sales/customer': typeof AuthenticatedSalesCustomerRoute
   '/sales/sales-entry': typeof AuthenticatedSalesSalesEntryRoute
   '/sales/sales-return': typeof AuthenticatedSalesSalesReturnRoute
+  '/settings/configuration': typeof AuthenticatedSettingsConfigurationRoute
+  '/settings/document-numbering': typeof AuthenticatedSettingsDocumentNumberingRoute
   '/setup/category': typeof AuthenticatedSetupCategoryRoute
   '/setup/packing': typeof AuthenticatedSetupPackingRoute
   '/setup/tax-type': typeof AuthenticatedSetupTaxTypeRoute
@@ -245,7 +255,6 @@ export interface FileRoutesById {
   '/_authenticated/products': typeof AuthenticatedProductsRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/roles-permissions': typeof AuthenticatedRolesPermissionsRoute
-  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/user': typeof AuthenticatedUserRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/accounting/account-master': typeof AuthenticatedAccountingAccountMasterRoute
@@ -262,6 +271,8 @@ export interface FileRoutesById {
   '/_authenticated/sales/customer': typeof AuthenticatedSalesCustomerRoute
   '/_authenticated/sales/sales-entry': typeof AuthenticatedSalesSalesEntryRoute
   '/_authenticated/sales/sales-return': typeof AuthenticatedSalesSalesReturnRoute
+  '/_authenticated/settings/configuration': typeof AuthenticatedSettingsConfigurationRoute
+  '/_authenticated/settings/document-numbering': typeof AuthenticatedSettingsDocumentNumberingRoute
   '/_authenticated/setup/category': typeof AuthenticatedSetupCategoryRoute
   '/_authenticated/setup/packing': typeof AuthenticatedSetupPackingRoute
   '/_authenticated/setup/tax-type': typeof AuthenticatedSetupTaxTypeRoute
@@ -275,7 +286,6 @@ export interface FileRouteTypes {
     | '/products'
     | '/reports'
     | '/roles-permissions'
-    | '/settings'
     | '/user'
     | '/accounting/account-master'
     | '/accounting/journal-entry'
@@ -291,6 +301,8 @@ export interface FileRouteTypes {
     | '/sales/customer'
     | '/sales/sales-entry'
     | '/sales/sales-return'
+    | '/settings/configuration'
+    | '/settings/document-numbering'
     | '/setup/category'
     | '/setup/packing'
     | '/setup/tax-type'
@@ -301,7 +313,6 @@ export interface FileRouteTypes {
     | '/products'
     | '/reports'
     | '/roles-permissions'
-    | '/settings'
     | '/user'
     | '/'
     | '/accounting/account-master'
@@ -318,6 +329,8 @@ export interface FileRouteTypes {
     | '/sales/customer'
     | '/sales/sales-entry'
     | '/sales/sales-return'
+    | '/settings/configuration'
+    | '/settings/document-numbering'
     | '/setup/category'
     | '/setup/packing'
     | '/setup/tax-type'
@@ -329,7 +342,6 @@ export interface FileRouteTypes {
     | '/_authenticated/products'
     | '/_authenticated/reports'
     | '/_authenticated/roles-permissions'
-    | '/_authenticated/settings'
     | '/_authenticated/user'
     | '/_authenticated/'
     | '/_authenticated/accounting/account-master'
@@ -346,6 +358,8 @@ export interface FileRouteTypes {
     | '/_authenticated/sales/customer'
     | '/_authenticated/sales/sales-entry'
     | '/_authenticated/sales/sales-return'
+    | '/_authenticated/settings/configuration'
+    | '/_authenticated/settings/document-numbering'
     | '/_authenticated/setup/category'
     | '/_authenticated/setup/packing'
     | '/_authenticated/setup/tax-type'
@@ -399,13 +413,6 @@ declare module '@tanstack/react-router' {
       path: '/roles-permissions'
       fullPath: '/roles-permissions'
       preLoaderRoute: typeof AuthenticatedRolesPermissionsRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/settings': {
-      id: '/_authenticated/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/user': {
@@ -513,6 +520,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSalesSalesReturnRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/settings/configuration': {
+      id: '/_authenticated/settings/configuration'
+      path: '/settings/configuration'
+      fullPath: '/settings/configuration'
+      preLoaderRoute: typeof AuthenticatedSettingsConfigurationRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/settings/document-numbering': {
+      id: '/_authenticated/settings/document-numbering'
+      path: '/settings/document-numbering'
+      fullPath: '/settings/document-numbering'
+      preLoaderRoute: typeof AuthenticatedSettingsDocumentNumberingRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/setup/category': {
       id: '/_authenticated/setup/category'
       path: '/setup/category'
@@ -548,7 +569,6 @@ interface AuthenticatedRouteChildren {
   AuthenticatedProductsRoute: typeof AuthenticatedProductsRoute
   AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedRolesPermissionsRoute: typeof AuthenticatedRolesPermissionsRoute
-  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedUserRoute: typeof AuthenticatedUserRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedAccountingAccountMasterRoute: typeof AuthenticatedAccountingAccountMasterRoute
@@ -565,6 +585,8 @@ interface AuthenticatedRouteChildren {
   AuthenticatedSalesCustomerRoute: typeof AuthenticatedSalesCustomerRoute
   AuthenticatedSalesSalesEntryRoute: typeof AuthenticatedSalesSalesEntryRoute
   AuthenticatedSalesSalesReturnRoute: typeof AuthenticatedSalesSalesReturnRoute
+  AuthenticatedSettingsConfigurationRoute: typeof AuthenticatedSettingsConfigurationRoute
+  AuthenticatedSettingsDocumentNumberingRoute: typeof AuthenticatedSettingsDocumentNumberingRoute
   AuthenticatedSetupCategoryRoute: typeof AuthenticatedSetupCategoryRoute
   AuthenticatedSetupPackingRoute: typeof AuthenticatedSetupPackingRoute
   AuthenticatedSetupTaxTypeRoute: typeof AuthenticatedSetupTaxTypeRoute
@@ -575,7 +597,6 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedProductsRoute: AuthenticatedProductsRoute,
   AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedRolesPermissionsRoute: AuthenticatedRolesPermissionsRoute,
-  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedUserRoute: AuthenticatedUserRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedAccountingAccountMasterRoute:
@@ -600,6 +621,10 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedSalesCustomerRoute: AuthenticatedSalesCustomerRoute,
   AuthenticatedSalesSalesEntryRoute: AuthenticatedSalesSalesEntryRoute,
   AuthenticatedSalesSalesReturnRoute: AuthenticatedSalesSalesReturnRoute,
+  AuthenticatedSettingsConfigurationRoute:
+    AuthenticatedSettingsConfigurationRoute,
+  AuthenticatedSettingsDocumentNumberingRoute:
+    AuthenticatedSettingsDocumentNumberingRoute,
   AuthenticatedSetupCategoryRoute: AuthenticatedSetupCategoryRoute,
   AuthenticatedSetupPackingRoute: AuthenticatedSetupPackingRoute,
   AuthenticatedSetupTaxTypeRoute: AuthenticatedSetupTaxTypeRoute,

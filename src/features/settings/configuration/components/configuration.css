@@ -1,0 +1,47 @@
+.config-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.config-row {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px dashed var(--separator);
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 4px;
+  }
+
+  & .form-group {
+    margin: 0;
+  }
+}
+
+.config-row-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.config-row-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.config-row-name {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .config-row {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+}
